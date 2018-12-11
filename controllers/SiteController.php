@@ -9,7 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
-use yii\web\UploadedFile;
+use app\models\EntryForm;
 
 class SiteController extends Controller
 {
@@ -149,5 +149,17 @@ class SiteController extends Controller
             'fileContents' => $fileContents
         ]);*/
         return $this->render('test');
+    }
+    public function actionEntry()
+    {
+        $model = new EntryForm();
+        if($model->load(Yii::$app->request->post()) && $model->validate())
+        {
+            return $this->render('entry-confirm', ['model' => $model]);
+        }
+        else
+        {
+            return $this->render('entry', ['model' => $model]);
+        }
     }
 }
