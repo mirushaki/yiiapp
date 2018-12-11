@@ -129,6 +129,7 @@ class SiteController extends Controller
 
     public function actionTest()
     {
+        /*
         $request = Yii::$app->request;
         $fileContents = '';
 
@@ -146,6 +147,7 @@ class SiteController extends Controller
 
         return $this->render('test', [
             'fileContents' => $fileContents
-        ]);
+        ]);*/
+        return $this->render('test');
     }
 }
