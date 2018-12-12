@@ -35,5 +35,8 @@ tests/_support/_generated
 # Bower Resource
 .bowerrc
 
+# runtime directory
+runtime/
+
 #simple error.log
 /web/files/error.log

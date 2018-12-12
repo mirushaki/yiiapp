@@ -32,29 +32,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php
 
-    throw new Exception('user defined exception thrown');
-
-    //set_error_handler('customError');
-
-    function customExceptionHandler(Exception $e)
-    {
-        echo $e->getMessage();
-    }
-
-    function customErrorHandler($errLevel, $errMessage)
-    {
-        $message =  '[' .date("d/m/Y H:i:s") . ']' . " - ERROR: "  . "[$errLevel] $errMessage" .  PHP_EOL;
-        echo $message;
-        echo "<br>";
-        echo "Ending script";
-        if(!file_exists("files/error.log"))
-        {
-            $errorLogfile = fopen('files/error.log', 'w');
-            fclose($errorLogfile);
-        }
-        error_log($message, 3, "files/error.log");
-        die();
-    }
     echo "<pre>";
     echo "</pre>";
     ?>

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Calculator;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -9,7 +10,6 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
-use app\models\EntryForm;
 
 class SiteController extends Controller
 {
@@ -150,16 +150,52 @@ class SiteController extends Controller
         ]);*/
         return $this->render('test');
     }
-    public function actionEntry()
+
+    public function actionCalculator()
     {
-        $model = new EntryForm();
-        if($model->load(Yii::$app->request->post()) && $model->validate())
+        $operations = Calculator::getOperationAssocArray();
+
+        if(Yii::$app->request->isPost)
         {
-            return $this->render('entry-confirm', ['model' => $model]);
+            $post = Yii::$app->request->post();
+            $a = $post['a'];
+            $b = $post['b'];
+            $currentOperation = $post['operations'];
+
+            $result = '';
+            switch($currentOperation)
+            {
+                case Calculator::ADD:
+                    $result = Calculator::add($a, $b);
+                    break;
+                case Calculator::SUBSTRACT:
+                    $result = Calculator::substract($a, $b);
+                    break;
+                case Calculator::MULTIPLY:
+                    $result = Calculator::multiply($a, $b);
+                    break;
+                case Calculator::DIVIDE:
+                    $result = Calculator::divide($a, $b);
+                    break;
+            }
+            return $this->render('calculation',
+                ['result' => $result,
+                    'a' => $a,
+                    'b' => $b,
+                    'operations' => $operations,
+                    'currentOperation' => $currentOperation
+                    ]);
         }
         else
         {
-            return $this->render('entry', ['model' => $model]);
+            $a = null;
+            $b = null;
+            return $this->render('calculation',
+                ['a' => $a,
+                 'b' => $b,
+                 'operations' => $operations,
+                 'currentOperation' => Calculator::ADD
+                ]);
         }
     }
 }
