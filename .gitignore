@@ -40,3 +40,6 @@ runtime/
 
 #simple error.log
 /web/files/error.log
+
+#exclude apache-logs
+apache-logs/

@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use app\models\Calculator;
 use Yii;
+use yii\base\InvalidRouteException;
+use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
@@ -52,6 +54,9 @@ class SiteController extends Controller
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
+            'dummy' => [
+                'class' => 'app\actions\DummyAction'
+            ]
         ];
     }
 
@@ -62,7 +67,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->redirect(['site/test']);
+        //return $this->render('index');
     }
 
     /**
@@ -124,7 +130,9 @@ class SiteController extends Controller
      */
     public function actionAbout()
     {
-        return $this->render('about');
+
+        //return $this->runAction('dummy', ['prop1' => 'value1', 'prop2' => 'value2']);
+        //return $this->render('about');
     }
 
     public function actionTest()

@@ -31,8 +31,17 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-test">
     <h1><?= Html::encode($this->title) ?></h1>
     <?php
+    echo "welcome";
+    echo "<br>";
+    $hello = \Yii::t('app', "welcome");
+    echo $hello;
+    echo "<br>";
 
     echo "<pre>";
+    print_r(Yii::$classMap);
     echo "</pre>";
     ?>
+    <div id="Usefull">
+        <?php echo "usefull stuff here" ?>
+    </div>
 </div>
