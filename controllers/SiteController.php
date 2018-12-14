@@ -148,6 +148,7 @@ class SiteController extends Controller
             //$data = Yii::$app->request->post('TestModel', []);
             //$model->firstName = isset($data['firstName']) ? $data['firstName'] : null;
             //$model->password = isset($data['password']) ? $data['password'] : null;
+            $model->dropdownItems[3] = 'item 3';
             $data = $model->attributes;
             return $this->render('test', ['model' => $model, 'data' => $data]);
         }

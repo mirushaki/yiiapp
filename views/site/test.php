@@ -5,11 +5,17 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\widgets\Pjax;
 
 $this->title = 'Test';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <style>
+    div.required label.control-label:after {
+        content: " *";
+        color: red;
+    }
     table {
         collapse: collapse;
         text-align: center;
@@ -33,16 +39,33 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-test">
     <h1><?= Html::encode($this->title) ?></h1>
     <?php
-    $form = Activeform::begin();
+    Pjax::begin([
 
-    echo $form->field($model, 'firstName');
-    echo $form->field($model, 'password')->input('password');
+    ]);
+
+    $form = Activeform::begin([
+        'options' => ['data' => ['pjax' => true]],
+    ]);
+
+    echo $form->field($model, 'firstName')->hint('Please, enter your name.');
+    echo $form->field($model, 'password')->passwordInput()->hint('Please, enter your password.');
+    echo $form->field($model, 'checkboxItems[]')->checkboxList(['a' => 'Item A', 'b' => 'Item B', 'c' => 'Item C']);
+    echo $form->field($model, 'dropdownItems')->dropdownList($model->dropdownItems,
+        ['prompt'=>'Select Category']
+    );
+
+
+    echo $form->field($model, 'radioItems')->radioList([
+        1 => 'radio 1',
+        2 => 'radio 2'
+    ]);
 
     ?>
     <div class="form-group">
         <?php echo Html::submitButton("Save Info", ['class' => 'btn btn-primary']) ?>
     </div>
     <?php ActiveForm::end();
+    Pjax::end();
 
 
     if($_SERVER['REQUEST_METHOD'] == 'POST')

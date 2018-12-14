@@ -19,31 +19,35 @@ class TestModel extends Model
 
     public $firstName;
     public $password;
-    public static $number = 8;
-    public static $anotherStaticNumber = 10;
+    public $checkboxItems;
+    public $dropdownItems = [
+        1 => 'item 1',
+        2 => 'item 2'
+    ];
+    public $radioItems;
 
     public function attributeLabels()
     {
-        return array(
+        return [
             'password' => 'PASSWORD'
-        );
+        ];
     }
 
     public function rules()
     {
-        return array(
+        return [
             ['firstName', 'required'],
-            ['!password', 'string', 'min' => 6, 'max' => 10, 'on' => self::SCENARIO_ALL]
-        );
+            ['!password', 'required', 'on' => self::SCENARIO_ALL],
+            ['!password', 'string', 'length' => [6,10], 'on' => self::SCENARIO_ALL]
+        ];
     }
 
     //if scenarios() conflict with rules(), rules are applyed
     public function scenarios()
     {
-        return array(
+        return [
             self::SCENARIO_ALL => ['firstName', '!password'],
             self::SCENARIO_FIRSTNAME_ONLY => ['firstName']
-        );
+        ];
     }
-
 }
