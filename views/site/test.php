@@ -1,12 +1,14 @@
 <?php
 /* @var $this yii\web\View */
+/* @var $model app\models\TestModel */
+/* @var $data array */
 
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
 $this->title = 'Test';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
 <style>
     table {
         collapse: collapse;
@@ -31,17 +33,28 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-test">
     <h1><?= Html::encode($this->title) ?></h1>
     <?php
-    echo "welcome";
-    echo "<br>";
-    $hello = \Yii::t('app', "welcome");
-    echo $hello;
-    echo "<br>";
+    $form = Activeform::begin();
 
+    echo $form->field($model, 'firstName');
+    echo $form->field($model, 'password')->input('password');
+
+    ?>
+    <div class="form-group">
+        <?php echo Html::submitButton("Save Info", ['class' => 'btn btn-primary']) ?>
+    </div>
+    <?php ActiveForm::end();
+
+
+    if($_SERVER['REQUEST_METHOD'] == 'POST')
+    {
+        echo "METHOD: POST";
+    }
+    else if($_SERVER['REQUEST_METHOD'] == 'GET')
+    {
+        echo "METHOD: GET";
+    }
     echo "<pre>";
-    print_r(Yii::$classMap);
+    print_r($data);
     echo "</pre>";
     ?>
-    <div id="Usefull">
-        <?php echo "usefull stuff here" ?>
-    </div>
 </div>

@@ -3,8 +3,10 @@
 namespace app\controllers;
 
 use app\models\Calculator;
+use app\models\TestModel;
 use Yii;
 use yii\base\InvalidRouteException;
+use yii\base\Model;
 use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -130,33 +132,32 @@ class SiteController extends Controller
      */
     public function actionAbout()
     {
-
         //return $this->runAction('dummy', ['prop1' => 'value1', 'prop2' => 'value2']);
-        //return $this->render('about');
+        return $this->render('about');
     }
 
     public function actionTest()
     {
-        /*
-        $request = Yii::$app->request;
-        $fileContents = '';
-
-        try {
-            if ($request->isPost) {
-                $file = UploadedFile::getInstanceByName('file');
-                $file->saveAs("files/" . $file);
-                $fileContents = $file;
-            }
-        }
-        catch(Exception $e)
+        if(Yii::$app->request->isPost)
         {
-            die($e->getMessage());
-        }
+            $model = new TestModel();
+            $model->setScenario(TestModel::SCENARIO_ALL);
+            $model->attributes = Yii::$app->request->post('TestModel');
+            $model->password = Yii::$app->request->post('TestModel')['password'];
 
-        return $this->render('test', [
-            'fileContents' => $fileContents
-        ]);*/
-        return $this->render('test');
+            //$data = Yii::$app->request->post('TestModel', []);
+            //$model->firstName = isset($data['firstName']) ? $data['firstName'] : null;
+            //$model->password = isset($data['password']) ? $data['password'] : null;
+            $data = $model->attributes;
+            return $this->render('test', ['model' => $model, 'data' => $data]);
+        }
+        else if(Yii::$app->request->isGet)
+        {
+            $model = new TestModel();
+            $model->setScenario(TestModel::SCENARIO_ALL);
+            $data = $model->attributes;
+            return $this->render('test', ['model' => $model, 'data' => $data]);
+        }
     }
 
     public function actionCalculator()
