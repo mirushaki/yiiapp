@@ -33,7 +33,8 @@ class TestModel extends Model
     {
         return [
             [['firstName', 'lastName'], 'required'],
-            ['!password', 'string', 'min' => 6, 'max' => 10, 'on' => self::SCENARIO_ALL]
+            ['!password', 'string', 'min' => 6, 'max' => 10, 'on' => self::SCENARIO_ALL],
+            ['!password', 'required', 'on' => self::SCENARIO_ALL]
         ];
     }
 
@@ -41,25 +42,21 @@ class TestModel extends Model
     public function scenarios()
     {
         return [
-            self::SCENARIO_ALL => ['firstName', 'lastName', 'extraInfo', '!password'],
+            self::SCENARIO_ALL => ['firstName', 'lastName', 'password', 'extraInfo', '!password'],
             self::SCENARIO_FIRSTNAME_ONLY => ['firstName']
         ];
     }
 
     public function fields()
     {
-        $fields = parent::fields();
-
-        unset($fields['extraInfo']);
-
-        return $fields;
-    }
-
-    public function extraFields()
-    {
         return [
+            'firstName',
+            'lastName',
+            'password' => function() {
+            return sha1($this->password);
+            },
             'fullName' => function() {
-                return $this->firstName . ' ' . $this->lastName;
+            return $this->firstName . ' ' . $this->lastName;
             }
         ];
     }

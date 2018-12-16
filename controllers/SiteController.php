@@ -144,7 +144,7 @@ class SiteController extends Controller
             $model->attributes = Yii::$app->request->post('TestModel');
             $model->password = Yii::$app->request->post('TestModel')['password'];
 
-            $data = $model->toArray([], array_keys($model->extraFields()));
+            $data = $model->toArray();
 
             return $this->render('test', ['model' => $model, 'data' => $data]);
         }
