@@ -140,23 +140,20 @@ class SiteController extends Controller
     {
         if(Yii::$app->request->isPost)
         {
-            $model = new TestModel();
-            $model->setScenario(TestModel::SCENARIO_ALL);
+            $model = new TestModel(['scenario' => TestModel::SCENARIO_ALL]);
             $model->attributes = Yii::$app->request->post('TestModel');
             $model->password = Yii::$app->request->post('TestModel')['password'];
 
-            //$data = Yii::$app->request->post('TestModel', []);
-            //$model->firstName = isset($data['firstName']) ? $data['firstName'] : null;
-            //$model->password = isset($data['password']) ? $data['password'] : null;
-            $data = $model->attributes;
-            return $this->render('test', ['model' => $model]);
+            $data = $model->toArray([], array_keys($model->extraFields()));
+
+            return $this->render('test', ['model' => $model, 'data' => $data]);
         }
         else if(Yii::$app->request->isGet)
         {
             $model = new TestModel();
             $model->setScenario(TestModel::SCENARIO_ALL);
-            $data = $model->attributes;
-            return $this->render('test', ['model' => $model]);
+            $data = $model->toArray();
+            return $this->render('test', ['model' => $model, 'data' => $data]);
         }
     }
 

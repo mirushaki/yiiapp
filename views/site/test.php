@@ -1,6 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 /* @var $model app\models\TestModel */
+/* @var $data [] */
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -35,7 +36,9 @@ $this->params['breadcrumbs'][] = $this->title;
     $form = Activeform::begin();
 
     echo $form->field($model, 'firstName');
+    echo $form->field($model, 'lastName');
     echo $form->field($model, 'password')->input('password');
+    echo $form->field($model, 'extraInfo');
 
     ?>
     <div class="form-group">
@@ -54,6 +57,9 @@ $this->params['breadcrumbs'][] = $this->title;
     }
     echo "<pre>";
     print_r($model->attributes);
+    echo "</pre>";
+    echo "<pre>";
+    print_r($data);
     echo "</pre>";
     ?>
 </div>

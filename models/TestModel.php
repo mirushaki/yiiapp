@@ -18,9 +18,9 @@ class TestModel extends Model
     const SCENARIO_FIRSTNAME_ONLY = 1;
 
     public $firstName;
+    public $lastName;
     public $password;
-    public static $number = 8;
-    public static $anotherStaticNumber = 10;
+    public $extraInfo;
 
     public function attributeLabels()
     {
@@ -32,7 +32,7 @@ class TestModel extends Model
     public function rules()
     {
         return [
-            ['firstName', 'required'],
+            [['firstName', 'lastName'], 'required'],
             ['!password', 'string', 'min' => 6, 'max' => 10, 'on' => self::SCENARIO_ALL]
         ];
     }
@@ -41,9 +41,26 @@ class TestModel extends Model
     public function scenarios()
     {
         return [
-            self::SCENARIO_ALL => ['firstName', '!password'],
+            self::SCENARIO_ALL => ['firstName', 'lastName', 'extraInfo', '!password'],
             self::SCENARIO_FIRSTNAME_ONLY => ['firstName']
         ];
     }
 
+    public function fields()
+    {
+        $fields = parent::fields();
+
+        unset($fields['extraInfo']);
+
+        return $fields;
+    }
+
+    public function extraFields()
+    {
+        return [
+            'fullName' => function() {
+                return $this->firstName . ' ' . $this->lastName;
+            }
+        ];
+    }
 }
