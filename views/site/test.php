@@ -1,7 +1,6 @@
 <?php
 /* @var $this yii\web\View */
 /* @var $model app\models\TestModel */
-/* @var $data array */
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -54,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
         echo "METHOD: GET";
     }
     echo "<pre>";
-    print_r($data);
+    print_r($model->attributes);
     echo "</pre>";
     ?>
 </div>

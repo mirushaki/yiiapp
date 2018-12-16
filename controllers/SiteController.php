@@ -149,14 +149,14 @@ class SiteController extends Controller
             //$model->firstName = isset($data['firstName']) ? $data['firstName'] : null;
             //$model->password = isset($data['password']) ? $data['password'] : null;
             $data = $model->attributes;
-            return $this->render('test', ['model' => $model, 'data' => $data]);
+            return $this->render('test', ['model' => $model]);
         }
         else if(Yii::$app->request->isGet)
         {
             $model = new TestModel();
             $model->setScenario(TestModel::SCENARIO_ALL);
             $data = $model->attributes;
-            return $this->render('test', ['model' => $model, 'data' => $data]);
+            return $this->render('test', ['model' => $model]);
         }
     }
 
