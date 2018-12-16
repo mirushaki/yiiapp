@@ -24,26 +24,26 @@ class TestModel extends Model
 
     public function attributeLabels()
     {
-        return array(
+        return [
             'password' => 'PASSWORD'
-        );
+        ];
     }
 
     public function rules()
     {
-        return array(
+        return [
             ['firstName', 'required'],
             ['!password', 'string', 'min' => 6, 'max' => 10, 'on' => self::SCENARIO_ALL]
-        );
+        ];
     }
 
     //if scenarios() conflict with rules(), rules are applyed
     public function scenarios()
     {
-        return array(
+        return [
             self::SCENARIO_ALL => ['firstName', '!password'],
             self::SCENARIO_FIRSTNAME_ONLY => ['firstName']
-        );
+        ];
     }
 
 }
