@@ -3,11 +3,12 @@
 /* @var $model app\models\TestModel */
 /* @var $data [] */
 
+use app\assets\CustomAsset;
 use app\widgets\MethodInfo;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-\app\assets\CustomAsset::register($this);
+CustomAsset::register($this);
 
 $this->title = 'Test';
 $this->params['breadcrumbs'][] = $this->title;

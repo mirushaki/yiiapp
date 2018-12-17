@@ -43,12 +43,13 @@ $config = [
             ],
         ],
         'db' => $db,
-        'assetManager' =>[
+        'assetManager' => [
             'bundles' => [
                 'app\assets\CustomAsset' => [
-                        'sourcePath' => null
-                    ]
-            ]
+                ]
+            ],
+            'linkAssets' => true,
+            'appendTimestamp' => true
         ]
         /*
         'urlManager' => [
