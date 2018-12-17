@@ -7,31 +7,39 @@ use app\widgets\MethodInfo;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+\app\assets\CustomAsset::register($this);
+
 $this->title = 'Test';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<style>
-    table {
-        collapse: collapse;
-        text-align: center;
-    }
-    thead {
-        background-color: #333333;
-        color: white;
-    }
-    tr:nth-child(even) {
-        background-color: #9d9d9d;
-    }
-    td
-    {
-        border: 1px solid black;
-        padding: 5px;
-    }
-
-</style>
-
 
 <div class="site-test">
+    <table>
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Name</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Miro</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Dato</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Vato</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Kato</td>
+            </tr>
+        </tbody>
+    </table>
     <h1><?= Html::encode($this->title) ?></h1>
     <?php
     echo MethodInfo::widget();
