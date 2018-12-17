@@ -43,6 +43,13 @@ $config = [
             ],
         ],
         'db' => $db,
+        'assetManager' =>[
+            'bundles' => [
+                'app\assets\CustomAsset' => [
+                        'sourcePath' => null
+                    ]
+            ]
+        ]
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,
