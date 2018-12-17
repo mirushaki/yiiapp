@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\dummyFilter;
 use app\models\Calculator;
 use app\models\TestModel;
 use Yii;
@@ -20,6 +21,7 @@ class SiteController extends Controller
     /**
      * {@inheritdoc}
      */
+
     public function behaviors()
     {
         return [
@@ -55,11 +57,22 @@ class SiteController extends Controller
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
-            'dummy' => [
-                'class' => 'app\actions\DummyAction'
             ]
         ];
+    }
+    private $_startTime;
+
+    public function beforeAction($action)
+    {
+        $this->_startTime = microtime(true);
+        return parent::beforeAction($action);
+    }
+
+    public function afterAction($action, $result)
+    {
+        $time = microtime(true) - $this->_startTime;
+        \Yii::debug("\'{$action->uniqueId}\' spent $time second.");
+        return parent::afterAction($action, $result);
     }
 
     /**
