@@ -3,6 +3,7 @@
 /* @var $model app\models\TestModel */
 /* @var $data [] */
 
+use app\widgets\MethodInfo;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -33,6 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-test">
     <h1><?= Html::encode($this->title) ?></h1>
     <?php
+    echo MethodInfo::widget();
     $form = Activeform::begin();
 
     echo $form->field($model, 'firstName');
