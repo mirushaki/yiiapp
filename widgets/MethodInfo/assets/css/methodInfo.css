@@ -1,0 +1,10 @@
+.MethodInfoWidget table {
+    collapse: collapse;
+    text-align: left;
+}
+.MethodInfoWidget tr
+{
+    color: white;
+    background-color: #468847;
+    border: 1px solid black;
+}

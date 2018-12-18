@@ -43,6 +43,14 @@ $config = [
             ],
         ],
         'db' => $db,
+        'assetManager' => [
+            'bundles' => [
+                'app\assets\CustomAsset' => [
+                ]
+            ],
+            'linkAssets' => true,
+            'appendTimestamp' => true
+        ]
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,
