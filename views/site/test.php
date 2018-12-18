@@ -8,9 +8,9 @@ use app\widgets\MethodInfo\MethodInfo;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-use yii\imagine\Image;
+use yii\jui;
 
-CustomAsset::register($this);
+//CustomAsset::register($this);
 
 $this->title = 'Test';
 $this->params['breadcrumbs'][] = $this->title;
@@ -45,8 +45,10 @@ $this->params['breadcrumbs'][] = $this->title;
     </table>
     <h1><?= Html::encode($this->title) ?></h1>
     <?php
-    Image::thumbnail('@webroot/img/austria.jpg', 600, 600)
-        ->save(Yii::getAlias('@runtime/thumb-austria.jpg'), ['quality' => 50]);
+    echo jui\DatePicker::widget([
+            'dateFormat' => 'php: m/d/Y',
+            'language' => 'ka-GE'
+    ]);
 
     echo MethodInfo::widget();
     $form = Activeform::begin();
