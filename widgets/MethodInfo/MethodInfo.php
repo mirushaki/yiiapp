@@ -6,32 +6,24 @@
  * Time: 4:31 PM
  */
 
-namespace app\widgets;
+namespace app\widgets\MethodInfo;
 
 use yii\base\Widget;
-use yii\helpers\Html;
+use yii\web\View;
 
 class MethodInfo extends Widget
 {
-    private $width;
-    private $height;
-    private $fontSize;
-
     private $methodType;
 
     public function init()
     {
         parent::init();
-
-        $this->width = 100;
-        $this->height = 20;
-        $this->fontSize  = 18;
-
+        MethodInfoAssets::register($this->getView());
         $this->methodType = $_SERVER['REQUEST_METHOD'];
     }
 
     public function run()
     {
-        return "METHOD: <strong>$this->methodType</strong>";
+        return $this->render('methodInfo', ['methodType' => $this->methodType]);
     }
 }

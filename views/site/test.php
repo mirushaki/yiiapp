@@ -4,7 +4,7 @@
 /* @var $data [] */
 
 use app\assets\CustomAsset;
-use app\widgets\MethodInfo;
+use app\widgets\MethodInfo\MethodInfo;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
