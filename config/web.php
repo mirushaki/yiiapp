@@ -46,7 +46,7 @@ $config = [
         'assetManager' => [
             'bundles' => [
                 'app\assets\CustomAsset' => [
-                ],
+                ]
             ],
             'linkAssets' => true,
             'appendTimestamp' => true
