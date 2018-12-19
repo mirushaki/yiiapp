@@ -59,7 +59,6 @@ $this->params['breadcrumbs'][] = $this->title;
         );
     }
 
-
     echo jui\DatePicker::widget([
             'dateFormat' => 'php: m/d/Y',
             'language' => 'ka-GE'
