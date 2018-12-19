@@ -51,7 +51,6 @@ $config = [
             'linkAssets' => true,
             'appendTimestamp' => true
         ],
-
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -60,6 +59,7 @@ $config = [
         ],
 
     ],
+    //'catchAll' => ['site/under-construction'],
     'params' => $params,
 ];
 
