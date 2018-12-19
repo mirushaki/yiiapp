@@ -9,7 +9,10 @@ use yii\base\InvalidRouteException;
 use yii\base\Model;
 use yii\db\Exception;
 use yii\filters\AccessControl;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
+use yii\web\HttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
@@ -145,16 +148,18 @@ class SiteController extends Controller
             $model->password = Yii::$app->request->post('TestModel')['password'];
 
             $data = $model->toArray();
-
+            Yii::$app->session->setFlash('message', 'Successfully poseted');
             return $this->render('test', ['model' => $model, 'data' => $data]);
         }
         else if(Yii::$app->request->isGet)
         {
             $model = new TestModel();
             $model->setScenario(TestModel::SCENARIO_ALL);
-            $data = $model->toArray();
+            $data = Yii::$app->request->getUserIP();
+
             return $this->render('test', ['model' => $model, 'data' => $data]);
         }
+        else throw new BadRequestHttpException();
     }
 
     public function actionCalculator()

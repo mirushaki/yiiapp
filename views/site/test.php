@@ -5,12 +5,15 @@
 
 use app\assets\CustomAsset;
 use app\widgets\MethodInfo\MethodInfo;
+use yii\bootstrap\Alert;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+use yii\helpers\Url;
+
 use yii\jui;
 
-//CustomAsset::register($this);
+CustomAsset::register($this);
 
 $this->title = 'Test';
 $this->params['breadcrumbs'][] = $this->title;
@@ -43,8 +46,20 @@ $this->params['breadcrumbs'][] = $this->title;
             </tr>
         </tbody>
     </table>
+
+    <a href="<?php echo Url::to(['site/calculator'])?>">Calculator</a>
     <h1><?= Html::encode($this->title) ?></h1>
     <?php
+    if(Yii::$app->session->hasFlash('message'))
+    {
+        echo Alert::Widget([
+            'options' => ['class' => 'alert-info'],
+            'body' => Yii::$app->session->getFlash('message')
+            ]
+        );
+    }
+
+
     echo jui\DatePicker::widget([
             'dateFormat' => 'php: m/d/Y',
             'language' => 'ka-GE'

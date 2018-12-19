@@ -50,15 +50,15 @@ $config = [
             ],
             'linkAssets' => true,
             'appendTimestamp' => true
-        ]
-        /*
+        ],
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-            ],
+            ]
         ],
-        */
+
     ],
     'params' => $params,
 ];
