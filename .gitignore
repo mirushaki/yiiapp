@@ -45,5 +45,5 @@ web/files/error.log
 apache-logs/
 
 #db and params
-config/params.php
 config/db.php
+config/params.php
