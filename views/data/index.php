@@ -2,9 +2,13 @@
 /** @var $this yii\web\View */
 /** @var $users */
 
+use yii\bootstrap\Alert;
 use yii\helpers\Html;
 
 \app\assets\CustomAsset::register($this);
+
+\app\assets\BootBoxAsset::register($this);
+\app\assets\BootBoxAsset::overrideSystemConfirm();
 
 $this->title = 'DATA';
 
@@ -18,6 +22,7 @@ $this->title = 'DATA';
                 <td>Last Name</td>
                 <td>E-mail</td>
                 <td>Details</td>
+                <td>Delete</td>
             </tr>
         </thead>
         <tbody>
@@ -29,7 +34,15 @@ $this->title = 'DATA';
                     foreach($user as $key=>$value)
                         echo "<td>" . $value ."</td>";
                     echo "<td>";
-                    echo Html::a('details', ['data/user-form', 'id' => $user['Id']]);
+                    echo Html::a('details', ['data/user-form', 'id' => $user['Id']], ['class' => 'btn btn-info']);
+                    echo "</td>";
+                    echo "<td>";
+                    echo Html::a('delete', ['data/delete-user', 'id' => $user['Id']],
+                        ['class' => 'btn btn-danger',
+                         'data' => [
+                                 'confirm' => 'Are you sure?'
+                         ]
+                        ]);
                     echo "</td>";
                     echo "</tr>";
                 }
@@ -39,6 +52,16 @@ $this->title = 'DATA';
     <br >
     <?php
     echo Html::a('Add User', ['data/add-user'], ['class' => 'btn btn-primary']);
+    echo "<br>";
+    echo "<br>";
+    if(Yii::$app->session->hasFlash('message'))
+    {
+        echo Alert::widget([
+            'options' => ['class' => Yii::$app->session->hasFlash('message-class') ?
+                Yii::$app->session->getFlash('message-class') : 'alert-info'],
+            'body' => Yii::$app->session->getFlash('message')
+        ]);
+    }
     ?>
 </div>
 

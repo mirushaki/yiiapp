@@ -9,10 +9,8 @@
 /** @var $user app\models\Users */
 /** @var $mm [] */
 
-use app\models\Users;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\bootstrap\Alert;
 
 $this->title = 'User Form';
 ?>
@@ -21,6 +19,7 @@ $this->title = 'User Form';
     <div style="width: 30%">
     <?php
         $form = ActiveForm::begin();
+        echo $form->field($user, 'id')->hiddenInput()->label(false);
         echo $form->field($user, 'firstName');
         echo $form->field($user, 'lastName');
         echo $form->field($user, 'eMail');
@@ -30,13 +29,6 @@ $this->title = 'User Form';
     </div>
     <?php
         $form::end();
-        if(Yii::$app->session->hasFlash('message'))
-        {
-            echo Alert::widget([
-                'options' => ['class' => 'alert-info'],
-                'body' => Yii::$app->session->getFlash('message')
-            ]);
-        }
     ?>
     </div>
 </div>

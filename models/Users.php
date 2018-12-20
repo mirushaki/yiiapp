@@ -13,6 +13,7 @@ use yii\base\Model;
 
 class Users extends Model
 {
+    public $id;
     public $firstName;
     public $lastName;
     public $eMail;
@@ -20,6 +21,7 @@ class Users extends Model
     public function attributeLabels()
     {
         return [
+            'id',
             'firstName' => 'First Name',
             'lastName' => 'Last Name',
             'eMail' => 'E-Mail'
@@ -29,6 +31,7 @@ class Users extends Model
     public function rules()
     {
         return [
+            ['id', 'safe'],
             [['firstName', 'lastName', 'eMail'], 'required'],
             [['firstName', 'lastName'], 'string', 'max' => 50],
             ['eMail', 'email']

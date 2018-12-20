@@ -45,8 +45,8 @@ $config = [
         'db' => $db,
         'assetManager' => [
             'bundles' => [
-                'app\assets\CustomAsset' => [
-                ]
+                'app\assets\CustomAsset' => [],
+                'app\assets\BootBoxAsset' => []
             ],
             'linkAssets' => true,
             'appendTimestamp' => true

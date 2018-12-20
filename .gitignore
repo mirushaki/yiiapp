@@ -43,3 +43,7 @@ runtime/
 
 #exclude apache-logs
 apache-logs/
+
+#db and params
+/config/params.php
+/config/db.php
