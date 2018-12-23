@@ -64,7 +64,7 @@ class DataController extends Controller
         try
         {
             $db->open();
-            $users = $db->createCommand('Select * From Users')->queryAll();
+            $users = $db->createCommand('Select * From {{Users}}')->queryAll();
             $db->close();
             return $this->render('index', ['users' => $users]);
         }
@@ -87,7 +87,7 @@ class DataController extends Controller
                 $db = \Yii::$app->db;
                 try {
                     $db->open();
-                    $requestedUser = $db->createCommand("Select * From Users Where Id = :id")
+                    $requestedUser = $db->createCommand("Select * From {{Users}} Where Id = :id")
                         ->bindValue(':id', $id)
                         ->queryOne();
 
@@ -119,7 +119,7 @@ class DataController extends Controller
                     $db->open();
                     $requestedUser = false;
                     if(($user->id) && ($user->id != 0)) {
-                        $requestedUser = $db->createCommand("Select * From Users Where Id = :id")
+                        $requestedUser = $db->createCommand("Select * From {{Users}} Where Id = :id")
                             ->bindValue(':id', $id)
                             ->queryOne();
                     }
