@@ -39,20 +39,22 @@ class DataController extends Controller
     {
         $db = \Yii::$app->db;
 
+        $transaction = $db->beginTransaction();
         try {
-            $db->open();
             $db->createCommand()->delete('Users', 'Id = :id', [':id' => $id])->execute();
             //$command = $db->createCommand("Delete From Users Where Id = $id");
             //$command->execute();
-            $db->close();
+            $transaction->commit();
             \Yii::$app->session->setFlash('message', 'The selected user has been deleted');
             \Yii::$app->session->setFlash('message-class', 'alert-danger');
             return $this->redirect(['data/users']);
         }
         catch (Exception $e)
         {
+            $transaction->rollBack();
             \Yii::$app->session->setFlash('message', 'Failed to delete selected user');
             \Yii::$app->session->setFlash('message-class', 'alert-danger');
+            throw $e;
             //throw new Exception('An unexpected error has occured');
         }
     }
