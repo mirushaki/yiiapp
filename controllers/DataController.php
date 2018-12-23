@@ -41,8 +41,9 @@ class DataController extends Controller
 
         try {
             $db->open();
-            $command = $db->createCommand("Delete From Users Where Id = $id");
-            $command->execute();
+            $db->createCommand()->delete('Users', 'Id = :id', [':id' => $id])->execute();
+            //$command = $db->createCommand("Delete From Users Where Id = $id");
+            //$command->execute();
             $db->close();
             \Yii::$app->session->setFlash('message', 'The selected user has been deleted');
             \Yii::$app->session->setFlash('message-class', 'alert-danger');
@@ -86,7 +87,8 @@ class DataController extends Controller
                 $db = \Yii::$app->db;
                 try {
                     $db->open();
-                    $requestedUser = $db->createCommand("Select * From Users Where Id = $id")->queryOne();
+                    $command = $db->createCommand("Select * From Users Where Id = :id")->bindValue(':id', $id);
+                    $requestedUser = $command->queryOne();
 
                     if ($requestedUser) {
                         $user->id = $requestedUser['Id'];
@@ -115,19 +117,33 @@ class DataController extends Controller
                 {
                     $db->open();
                     $requestedUser = false;
-                    if(($user->id) && ($user->id != 0))
-                        $requestedUser = $db->createCommand("Select * From Users Where Id = $user->id")->queryOne();
+                    if(($user->id) && ($user->id != 0)) {
+                        $command = $db->createCommand("Select * From Users Where Id = :id")->bindValue(':id', $id);
+                        $requestedUser = $command->queryOne();
+                    }
                     if($requestedUser)
                     {
-                        $db->createCommand("Update Users SET firstName='$user->firstName', lastName='$user->lastName',
-                                                      eMail='$user->eMail' WHERE Id = $user->id")->execute();
+                        $db->createCommand()->update('Users', [
+                            'firstName' => $user->firstName,
+                            'lastName' => $user->lastName,
+                            'eMail' => $user->eMail
+                        ], 'Id = :id', [':id' => $user->id])->execute();
+
+                        //$db->createCommand("Update Users SET firstName='$user->firstName', lastName='$user->lastName',
+                                                      //eMail='$user->eMail' WHERE Id = $user->id")->execute();
                         \Yii::$app->session->setFlash('message', 'An existing user has been updated successfully!');
                         \Yii::$app->session->setFlash('message-class', 'alert-info');
                     }
                     else
                     {
-                        $db->createCommand("insert into Users(firstName, lastName, eMail)
-                                        values ('$user->firstName', '$user->lastName', '$user->eMail')")->execute();
+                        $db->createCommand()->insert('Users', [
+                            'firstName' => $user->firstName,
+                            'lastName' => $user->lastName,
+                            'eMail' => $user->eMail]
+                        )->execute();
+
+                        //$db->createCommand("insert into Users(firstName, lastName, eMail)
+                                        //values ('$user->firstName', '$user->lastName', '$user->eMail')")->execute();
                         \Yii::$app->session->setFlash('message', 'A new user has been updated successfully!');
                         \Yii::$app->session->setFlash('message-class', 'alert-success');
                     }
