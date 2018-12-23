@@ -87,8 +87,9 @@ class DataController extends Controller
                 $db = \Yii::$app->db;
                 try {
                     $db->open();
-                    $command = $db->createCommand("Select * From Users Where Id = :id")->bindValue(':id', $id);
-                    $requestedUser = $command->queryOne();
+                    $requestedUser = $db->createCommand("Select * From Users Where Id = :id")
+                        ->bindValue(':id', $id)
+                        ->queryOne();
 
                     if ($requestedUser) {
                         $user->id = $requestedUser['Id'];
@@ -118,8 +119,9 @@ class DataController extends Controller
                     $db->open();
                     $requestedUser = false;
                     if(($user->id) && ($user->id != 0)) {
-                        $command = $db->createCommand("Select * From Users Where Id = :id")->bindValue(':id', $id);
-                        $requestedUser = $command->queryOne();
+                        $requestedUser = $db->createCommand("Select * From Users Where Id = :id")
+                            ->bindValue(':id', $id)
+                            ->queryOne();
                     }
                     if($requestedUser)
                     {
