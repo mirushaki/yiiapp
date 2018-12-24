@@ -39,30 +39,29 @@ class DataController extends Controller
     public function actionDeleteUser($id)
     {
         try {
-            (new Query())->from('Users')
-                ->where(['Id' => $id])
-                ->createCommand()->delete('Users')->execute();
+            Users::find()
+                ->where('id = :id', [':id' => $id])
+                ->one()
+                ->delete();
 
             \Yii::$app->session->setFlash('message', 'The selected user has been deleted');
             \Yii::$app->session->setFlash('message-class', 'alert-danger');
             return $this->redirect(['data/users']);
         }
-        catch (Exception $e)
+        catch (\Throwable $e)
         {
             \Yii::$app->session->setFlash('message', 'Failed to delete selected user');
             \Yii::$app->session->setFlash('message-class', 'alert-danger');
-            //throw new Exception('An unexpected error has occured');
+            Throw $e;
         }
     }
 
 
     public function actionUsers()
     {
-        $db = \Yii::$app->db;
         try
         {
-            $users = (new Query())->from('Users')->all();
-
+            $users = Users::find()->all();
             return $this->render('index', ['users' => $users]);
         }
         catch (Exception $e) {
@@ -72,37 +71,23 @@ class DataController extends Controller
         }
     }
 
-    public function actionUserForm($id = 0)
+    public function actionUserForm($id = null)
     {
         $request = \Yii::$app->request;
-        $db = \Yii::$app->db;
 
         $user = new Users();
 
         if($request->isGet) {
-            if ($id != 0) {
-                $db = \Yii::$app->db;
+            if ($id) {
                 try {
-                    $requestedUser = (new Query())->from('Users')
-                        ->where(['Id' => $id])
-                        ->limit(1)
+                    $user = Users::find()
+                        ->where(['id' => $id])
                         ->one();
-                    if ($requestedUser) {
-                        $user->id = $requestedUser['Id'];
-                        $user->firstName = $requestedUser['firstName'];
-                        $user->lastName = $requestedUser['lastName'];
-                        $user->eMail = $requestedUser['eMail'];
-                    }
-                    return $this->render('userForm', ['user' => $user]);
-                } catch (Exception $e) {
+                } catch (\Throwable $e) {
+                    Throw $e;
                 }
             }
-            else
-            {
-                return $this->render('userForm', ['user' => $user]);
-            }
-
-
+            return $this->render('userForm', ['user' => $user]);
         }
         else if($request->isPost)
         {
@@ -110,16 +95,44 @@ class DataController extends Controller
             {
                 try
                 {
+                    $userExists = Users::find()
+                        ->where('id = :id', [':id' => $user->getAttribute('id')])
+                        ->exists();
+
+                    if(!$userExists)
+                    {
+                        $user->insert(true);
+                        \Yii::$app->session->setFlash('message', 'A new user has been created successfully!');
+                        \Yii::$app->session->setFlash('message-class', 'alert-success');
+                    }
+                    else
+                    {
+                        if($user->update(true) !== false)
+                        {
+                            \Yii::$app->session->setFlash('message', 'An existing user has been updated successfully!');
+                            \Yii::$app->session->setFlash('message-class', 'alert-info');
+                        }
+                        else
+                        {
+                            \Yii::$app->session->setFlash('message', 'Failed to update existing user');
+                            \Yii::$app->session->setFlash('message-class', 'alert-danger');
+                        }
+                    }
+
+                    /*
                     $db->open();
                     $requestedUser = false;
+
                     if(($user->id) && ($user->id != 0)) {
-                        $requestedUser = (new Query())->from('Users')
+                        $requestedUser = Users::find()
                             ->where(['Id' => $id])
                             ->limit(1)
                             ->one();
                     }
                     if($requestedUser)
                     {
+                        Users::findOne($user->id)->update(false);
+
                         $db->createCommand()->update('Users', [
                             'firstName' => $user->firstName,
                             'lastName' => $user->lastName,
@@ -141,20 +154,20 @@ class DataController extends Controller
 
                         //$db->createCommand("insert into Users(firstName, lastName, eMail)
                                         //values ('$user->firstName', '$user->lastName', '$user->eMail')")->execute();
-                        \Yii::$app->session->setFlash('message', 'A new user has been updated successfully!');
+                        \Yii::$app->session->setFlash('message', 'A new user has been created successfully!');
                         \Yii::$app->session->setFlash('message-class', 'alert-success');
                     }
-                    $db->close();
+                    $db->close();*/
                 }
-                catch (Exception $e) {
+                catch (\Throwable $e) {
                     \Yii::$app->session->setFlash('message', 'Failed to add a new user!');
                     \Yii::$app->session->setFlash('message-class', 'alert-danger');
-                    throw new Exception('An unexpected error has occured');
+                    throw $e;
                 }
             }
             else
             {
-                \Yii::$app->session->setFlash('message', 'Failed to validate user!');
+                \Yii::$app->session->setFlash('message', 'Failed to validate user! print_r($user->getErrors()');
                 \Yii::$app->session->setFlash('message-class', 'alert-danger');
                 throw new Exception('An unexpected error has occured');
             }

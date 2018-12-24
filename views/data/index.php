@@ -34,10 +34,10 @@ $this->title = 'DATA';
                     foreach($user as $key=>$value)
                         echo "<td>" . $value ."</td>";
                     echo "<td>";
-                    echo Html::a('details', ['data/user-form', 'id' => $user['Id']], ['class' => 'btn btn-info']);
+                    echo Html::a('details', ['data/user-form', 'id' => $user->id], ['class' => 'btn btn-info']);
                     echo "</td>";
                     echo "<td>";
-                    echo Html::a('delete', ['data/delete-user', 'id' => $user['Id']],
+                    echo Html::a('delete', ['data/delete-user', 'id' => $user->id],
                         ['class' => 'btn btn-danger',
                          'data' => [
                                  'confirm' => 'Are you sure?'
