@@ -39,10 +39,7 @@ class DataController extends Controller
     public function actionDeleteUser($id)
     {
         try {
-            Users::find()
-                ->where('id = :id', [':id' => $id])
-                ->one()
-                ->delete();
+            Users::findOne(['id' => $id])->delete();
 
             \Yii::$app->session->setFlash('message', 'The selected user has been deleted');
             \Yii::$app->session->setFlash('message-class', 'alert-danger');
@@ -75,9 +72,7 @@ class DataController extends Controller
     {
         $request = \Yii::$app->request;
 
-        $user = Users::find()
-            ->where(['id' => $id])
-            ->one();
+        $user = Users::findOne(['id' => $id]);
 
         if(!$user)
             $user = new Users();
@@ -91,6 +86,16 @@ class DataController extends Controller
             {
                 try
                 {
+                    if($user->isNewRecord)
+                    {
+                        \Yii::$app->session->setFlash('message', 'A new user has been created successfully!');
+                        \Yii::$app->session->setFlash('message-class', 'alert-success');
+                    }
+                    else
+                    {
+                        \Yii::$app->session->setFlash('message', 'An existing user has been updated successfully!');
+                        \Yii::$app->session->setFlash('message-class', 'alert-info');
+                    }
                     $user->save();
                 }
                 catch (\Throwable $e) {
