@@ -12,6 +12,7 @@ namespace app\controllers;
 use app\models\Users;
 use yii\db\Command;
 use yii\db\Exception;
+use yii\db\Query;
 use yii\web\Controller;
 
 class DataController extends Controller
@@ -37,14 +38,11 @@ class DataController extends Controller
 
     public function actionDeleteUser($id)
     {
-        $db = \Yii::$app->db;
-
         try {
-            $db->open();
-            $db->createCommand()->delete('Users', 'Id = :id', [':id' => $id])->execute();
-            //$command = $db->createCommand("Delete From Users Where Id = $id");
-            //$command->execute();
-            $db->close();
+            (new Query())->from('Users')
+                ->where(['Id' => $id])
+                ->createCommand()->delete('Users')->execute();
+
             \Yii::$app->session->setFlash('message', 'The selected user has been deleted');
             \Yii::$app->session->setFlash('message-class', 'alert-danger');
             return $this->redirect(['data/users']);
@@ -63,9 +61,8 @@ class DataController extends Controller
         $db = \Yii::$app->db;
         try
         {
-            $db->open();
-            $users = $db->createCommand('Select * From {{Users}}')->queryAll();
-            $db->close();
+            $users = (new Query())->from('Users')->all();
+
             return $this->render('index', ['users' => $users]);
         }
         catch (Exception $e) {
@@ -86,19 +83,16 @@ class DataController extends Controller
             if ($id != 0) {
                 $db = \Yii::$app->db;
                 try {
-                    $db->open();
-                    $requestedUser = $db->createCommand("Select * From {{Users}} Where Id = :id")
-                        ->bindValue(':id', $id)
-                        ->queryOne();
-
+                    $requestedUser = (new Query())->from('Users')
+                        ->where(['Id' => $id])
+                        ->limit(1)
+                        ->one();
                     if ($requestedUser) {
                         $user->id = $requestedUser['Id'];
                         $user->firstName = $requestedUser['firstName'];
                         $user->lastName = $requestedUser['lastName'];
                         $user->eMail = $requestedUser['eMail'];
                     }
-
-                    $db->close();
                     return $this->render('userForm', ['user' => $user]);
                 } catch (Exception $e) {
                 }
@@ -119,9 +113,10 @@ class DataController extends Controller
                     $db->open();
                     $requestedUser = false;
                     if(($user->id) && ($user->id != 0)) {
-                        $requestedUser = $db->createCommand("Select * From {{Users}} Where Id = :id")
-                            ->bindValue(':id', $id)
-                            ->queryOne();
+                        $requestedUser = (new Query())->from('Users')
+                            ->where(['Id' => $id])
+                            ->limit(1)
+                            ->one();
                     }
                     if($requestedUser)
                     {
