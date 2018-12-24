@@ -19,6 +19,7 @@ class Users extends ActiveRecord
     public $lastName;
     public $eMail;
 */
+
     public static function tableName()
     {
         return '{{Users}}';
@@ -40,6 +41,7 @@ class Users extends ActiveRecord
             ['id', 'safe'],
             [['firstName', 'lastName', 'eMail'], 'required'],
             [['firstName', 'lastName'], 'string', 'max' => 50],
+            ['eMail', 'string', 'max' => 50],
             ['eMail', 'email']
         ];
     }

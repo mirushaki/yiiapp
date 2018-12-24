@@ -9,6 +9,7 @@
 namespace app\controllers;
 
 
+use app\models\User;
 use app\models\Users;
 use yii\db\Command;
 use yii\db\Exception;
@@ -39,7 +40,13 @@ class DataController extends Controller
     public function actionDeleteUser($id)
     {
         try {
-            Users::findOne(['id' => $id])->delete();
+
+            $usr = Users::findOne(['id' => $id]);
+
+            Users::getDb()->transaction(function($db) use ($usr)
+            {
+                $usr->delete();
+            });
 
             \Yii::$app->session->setFlash('message', 'The selected user has been deleted');
             \Yii::$app->session->setFlash('message-class', 'alert-danger');
@@ -58,8 +65,16 @@ class DataController extends Controller
     {
         try
         {
-            $users = Users::find()->all();
-            return $this->render('index', ['users' => $users]);
+            Users::getDb()->beginTransaction();
+            try
+            {
+                $users = Users::find()->all();
+                return $this->render('index', ['users' => $users]);
+            }
+            catch (\Exception $e)
+            {
+                throw $e;
+            }
         }
         catch (Exception $e) {
             \Yii::$app->session->setFlash('message', 'Failed to get user list');
@@ -74,8 +89,10 @@ class DataController extends Controller
 
         $user = Users::findOne(['id' => $id]);
 
-        if(!$user)
+        if(!$user) {
             $user = new Users();
+            $user->loadDefaultValues();
+        }
 
         if($request->isGet) {
             return $this->render('userForm', ['user' => $user]);
