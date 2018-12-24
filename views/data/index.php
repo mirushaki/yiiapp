@@ -14,6 +14,7 @@ $this->title = 'DATA';
 
 ?>
 <div class="data-index">
+    <div id="Users">
     <table>
         <thead>
             <tr>
@@ -49,6 +50,43 @@ $this->title = 'DATA';
             ?>
         </tbody>
     </table>
+    </div>
+    <div id="Orders">
+        <table>
+            <thead>
+            <tr>
+                <td>Id</td>
+                <td>Number</td>
+                <td>User Id</td>
+                <td>Details</td>
+                <td>Delete</td>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            foreach($users-> as $user)
+            {
+                echo "<tr>";
+                $userId = 0;
+                foreach($user as $key=>$value)
+                    echo "<td>" . $value ."</td>";
+                echo "<td>";
+                echo Html::a('details', ['data/user-form', 'id' => $user->id], ['class' => 'btn btn-info']);
+                echo "</td>";
+                echo "<td>";
+                echo Html::a('delete', ['data/delete-user', 'id' => $user->id],
+                    ['class' => 'btn btn-danger',
+                        'data' => [
+                            'confirm' => 'Are you sure?'
+                        ]
+                    ]);
+                echo "</td>";
+                echo "</tr>";
+            }
+            ?>
+            </tbody>
+        </table>
+    </div>
     <br >
     <?php
     echo Html::a('Add User', ['data/add-user'], ['class' => 'btn btn-primary']);

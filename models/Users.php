@@ -19,6 +19,11 @@ class Users extends ActiveRecord
     public $lastName;
     public $eMail;
 */
+    public function getOrders()
+    {
+        return $this->hasMany(Orders::className(), ['users_id' => 'id']);
+    }
+
     public static function tableName()
     {
         return '{{Users}}';
