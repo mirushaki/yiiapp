@@ -87,12 +87,12 @@ class DataController extends Controller
                 $db = \Yii::$app->db;
                 try {
                     $db->open();
-                    $requestedUser = $db->createCommand("Select * From {{Users}} Where Id = :id")
+                    $requestedUser = $db->createCommand("Select * From {{Users}} Where id = :id")
                         ->bindValue(':id', $id)
                         ->queryOne();
 
                     if ($requestedUser) {
-                        $user->id = $requestedUser['Id'];
+                        $user->id = $requestedUser['id'];
                         $user->firstName = $requestedUser['firstName'];
                         $user->lastName = $requestedUser['lastName'];
                         $user->eMail = $requestedUser['eMail'];
@@ -119,7 +119,7 @@ class DataController extends Controller
                     $db->open();
                     $requestedUser = false;
                     if(($user->id) && ($user->id != 0)) {
-                        $requestedUser = $db->createCommand("Select * From {{Users}} Where Id = :id")
+                        $requestedUser = $db->createCommand("Select * From {{Users}} Where id = :id")
                             ->bindValue(':id', $id)
                             ->queryOne();
                     }
@@ -129,7 +129,7 @@ class DataController extends Controller
                             'firstName' => $user->firstName,
                             'lastName' => $user->lastName,
                             'eMail' => $user->eMail
-                        ], 'Id = :id', [':id' => $user->id])->execute();
+                        ], 'id = :id', [':id' => $user->id])->execute();
 
                         //$db->createCommand("Update Users SET firstName='$user->firstName', lastName='$user->lastName',
                                                       //eMail='$user->eMail' WHERE Id = $user->id")->execute();
