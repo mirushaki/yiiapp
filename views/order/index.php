@@ -12,6 +12,7 @@ use yii\helpers\Html;
 \app\assets\BootBoxAsset::overrideSystemConfirm();
 
 /** @var $orders app\models\Orders[] */
+/** @var $userId integer */
 
 ?>
 <div id="data-orders">
@@ -20,13 +21,14 @@ use yii\helpers\Html;
     if(empty($orders))
     {
         echo "<h2>User has no orders</h2>";
-        $userId = null;
     }
     else
     {
         ?>
         <div id="Orders">
-            <h1>Orders</h1>
+            <?php $text = $orders[0]->user->firstName . ' ' .$orders[0]->user->lastName ?>
+            <?php echo "<h1>Orders - $text</h1>" ?>
+
             <table class="table table-responsive table-bordered table-hover table-striped table-fit">
                 <thead>
                 <tr>
