@@ -13,7 +13,7 @@ use yii\helpers\Html;
 $this->title = 'DATA';
 
 ?>
-<div class="data-index">
+<div class="user-index">
     <div id="Users">
         <h1>Users</h1>
     <table class="table table-responsive table-bordered table-hover table-striped table-fit">
@@ -36,13 +36,13 @@ $this->title = 'DATA';
                     foreach($user as $key=>$value)
                         echo "<td>" . $value ."</td>";
                     echo "<td>";
-                    echo Html::a('details', ['data/user-form', 'id' => $user->id], ['class' => 'btn btn-info']);
+                    echo Html::a('details', ['user/form', 'id' => $user->id], ['class' => 'btn btn-info']);
                     echo "</td>";
                     echo "<td>";
-                    echo Html::a('orders', ['data/orders', 'userId' => $user->id], ['class' => 'btn btn-warning']);
+                    echo Html::a('orders', ['order/index', 'userId' => $user->id], ['class' => 'btn btn-warning']);
                     echo "</td>";
                     echo "<td>";
-                    echo Html::a('delete', ['data/delete-user', 'id' => $user->id],
+                    echo Html::a('delete', ['user/delete', 'id' => $user->id],
                         ['class' => 'btn btn-danger',
                          'data' => [
                                  'confirm' => 'Are you sure?'
@@ -57,8 +57,8 @@ $this->title = 'DATA';
     </div>
     <br >
     <?php
-    echo Html::a('Add user', ['data/add-user'], ['class' => 'btn btn-primary']);
-    echo Html::a('Show all orders', ['data/orders'], ['class' => 'btn btn-secondary']);
+    echo Html::a('Add user', ['user/add'], ['class' => 'btn btn-primary']);
+    echo Html::a('Show all orders', ['order/index'], ['class' => 'btn btn-secondary']);
     echo "<br>";
     echo "<br>";
     if(Yii::$app->session->hasFlash('message'))
@@ -71,5 +71,3 @@ $this->title = 'DATA';
     }
     ?>
 </div>
-
-

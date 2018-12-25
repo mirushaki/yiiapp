@@ -7,14 +7,13 @@
  */
 
 /** @var $user app\models\Users */
-/** @var $mm [] */
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 $this->title = 'User Form';
 ?>
-<div class="data-userForm">
+<div class="user-form">
     <h1>User</h1>
     <div style="width: 30%">
     <?php

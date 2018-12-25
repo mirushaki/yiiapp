@@ -18,9 +18,13 @@ use yii\helpers\Html;
     <?php
 
     if(empty($orders))
+    {
         echo "<h2>User has no orders</h2>";
+        $userId = null;
+    }
     else
-    {?>
+    {
+        ?>
         <div id="Orders">
             <h1>Orders</h1>
             <table class="table table-responsive table-bordered table-hover table-striped table-fit">
@@ -42,10 +46,10 @@ use yii\helpers\Html;
                             echo "<td>" . $value . "</td>";
                     }
                     echo '<td>';
-                    echo Html::a('details', ['data/order-form', 'id' => $order->id], ['class' => 'btn btn-info']);
+                    echo Html::a('details', ['order/form', 'id' => $order->id], ['class' => 'btn btn-info']);
                     echo '</td>';
                     echo '<td>';
-                    echo Html::a('delete', ['data/delete-order', 'id' => $order->id], [
+                    echo Html::a('delete', ['order/delete', 'id' => $order->id], [
                             'class' => 'btn btn-danger',
                             'data' => [
                                     'confirm' => 'Are you sure?'
@@ -59,7 +63,7 @@ use yii\helpers\Html;
             </table>
         </div>
     <?php }
-    echo Html::a('Add new order', ['data/add-order', 'userId' => $userId], ['class' => 'btn btn-primary']);
+    echo Html::a('Add new order', ['order/add', 'userId' => $userId], ['class' => 'btn btn-primary']);
     echo "<br>";
     echo "<br>";
     if(Yii::$app->session->hasFlash('message'))
