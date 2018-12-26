@@ -5,6 +5,7 @@
 
 use app\widgets\LinkPager2\LinkPager2;
 use yii\bootstrap\Alert;
+use yii\grid\GridView;
 use yii\helpers\Html;
 
 //\app\assets\CustomAsset::register($this);
@@ -22,8 +23,8 @@ $this->title = 'DATA';
         <thead>
             <tr>
                 <td>Id</td>
-                <td><?php echo $dataProvider->sort->link('firstName') ?></td>
-                <td><?php echo $dataProvider->sort->link('lastName') ?></td>
+                <td><?php echo $dataProvider->getSort()->link('firstName') ?></td>
+                <td><?php echo $dataProvider->getSort()->link('lastName') ?></td>
                 <td>E-mail</td>
                 <td>Details</td>
                 <td>Orders</td>
@@ -63,15 +64,28 @@ $this->title = 'DATA';
     echo Html::a('Show all orders', ['order/index'], ['class' => 'btn btn-secondary']);
     echo "<br>";
     echo "<br>";
-    echo LinkPager2::Widget(
-            [
-                'pagination' => $dataProvider->pagination,
+    echo LinkPager2::Widget([
+                'pagination' => $dataProvider->getPagination(),
                 'firstPageLabel' => 'first',
                 'lastPageLabel' => 'last',
                 'maxButtonCount' => 5,
                 'totalRecordsLabelPrefix' => 'Total records:'
-            ]
-    );
+            ]);
+
+    echo GridView::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => [
+                [
+                    'header' => 'KK',
+                    'attribute'=>'lastName',
+                    'filter'=>[0=>"GOOD",1=>"BAD"]
+                ],
+            'firstName',
+            'lastName',
+            'eMail'
+        ]
+    ]);
+
     if(Yii::$app->session->hasFlash('message'))
     {
         echo Alert::widget([
