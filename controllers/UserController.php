@@ -42,6 +42,7 @@ class UserController extends Controller
                     'firstName',
                     'lastName'
                 ],
+                'enableMultiSort' => true
             ]);
 
             $sort->defaultOrder = ['lastName' => SORT_DESC];
