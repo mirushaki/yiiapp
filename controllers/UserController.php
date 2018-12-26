@@ -41,8 +41,10 @@ class UserController extends Controller
                 'attributes' => [
                     'firstName',
                     'lastName'
-                ]
+                ],
             ]);
+
+            $sort->defaultOrder = ['lastName' => SORT_DESC];
 
             $users = $usersQuery->offset($pagination->offset)
                 ->limit($pagination->limit)

@@ -24,7 +24,7 @@ $this->title = 'DATA';
         <thead>
             <tr>
                 <td>Id</td>
-                <td><?php echo $sort->link('firstName') ?></td>
+                <td><?php echo $sort->link('firstName'); $sort->createSortParam() ?></td>
                 <td><?php echo $sort->link('lastName') ?></td>
                 <td>E-mail</td>
                 <td>Details</td>
