@@ -11,6 +11,7 @@ namespace app\controllers;
 
 use app\models\Users;
 use Exception;
+use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
 use yii\data\Sort;
 use yii\web\Controller;
@@ -32,28 +33,29 @@ class UserController extends Controller
         {
             $usersQuery = Users::find();
 
-            $pagination = new Pagination([
-                'totalCount' => $usersQuery->count(),
-                'pageSize' => 2,
-            ]);
-
-            $sort = new Sort([
-                'attributes' => [
-                    'firstName',
-                    'lastName'
+            $dataProvider = new ActiveDataProvider([
+                'query' => Users::find(),
+                'pagination' => [
+                    'pageSize' => 2
                 ],
-                'enableMultiSort' => true,
-                'defaultOrder' => [
-                    'lastName' => SORT_DESC
+                'sort' => [
+                    'attributes' => [
+                        'firstName',
+                        'lastName'
+                    ],
+                    'enableMultiSort' => true,
+                    'defaultOrder' => [
+                        'lastName' => SORT_DESC
+                    ]
                 ]
             ]);
 
-            $users = $usersQuery->offset($pagination->offset)
+            /*$users = $usersQuery->offset($pagination->offset)
                 ->limit($pagination->limit)
                 ->orderBy($sort->orders)
-                ->all();
+                ->all();*/
 
-            return $this->render('index', ['users' => $users, 'pagination' => $pagination, 'sort' => $sort]);
+            return $this->render('index', ['users' => $dataProvider->getModels(),'dataProvider' => $dataProvider]);
         }
         catch (Exception $e) {
             \Yii::$app->session->setFlash('message', 'Failed to get user list');

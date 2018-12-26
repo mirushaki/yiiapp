@@ -1,13 +1,11 @@
 <?php
 /** @var $this yii\web\View */
 /** @var $users app\models\Users[]*/
-/** @var $pagination \yii\data\Pagination */
-/** @var $sort \yii\data\Sort */
+/** @var $dataProvider \yii\data\ActiveDataProvider */
 
 use app\widgets\LinkPager2\LinkPager2;
 use yii\bootstrap\Alert;
 use yii\helpers\Html;
-use yii\widgets\LinkPager;
 
 //\app\assets\CustomAsset::register($this);
 
@@ -24,8 +22,8 @@ $this->title = 'DATA';
         <thead>
             <tr>
                 <td>Id</td>
-                <td><?php echo $sort->link('firstName') ?></td>
-                <td><?php echo $sort->link('lastName') ?></td>
+                <td><?php echo $dataProvider->sort->link('firstName') ?></td>
+                <td><?php echo $dataProvider->sort->link('lastName') ?></td>
                 <td>E-mail</td>
                 <td>Details</td>
                 <td>Orders</td>
@@ -67,7 +65,7 @@ $this->title = 'DATA';
     echo "<br>";
     echo LinkPager2::Widget(
             [
-                'pagination' => $pagination,
+                'pagination' => $dataProvider->pagination,
                 'firstPageLabel' => 'first',
                 'lastPageLabel' => 'last',
                 'maxButtonCount' => 5,
