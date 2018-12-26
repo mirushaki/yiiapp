@@ -42,10 +42,11 @@ class UserController extends Controller
                     'firstName',
                     'lastName'
                 ],
-                'enableMultiSort' => true
+                'enableMultiSort' => true,
+                'defaultOrder' => [
+                    'lastName' => SORT_DESC
+                ]
             ]);
-
-            $sort->defaultOrder = ['lastName' => SORT_DESC];
 
             $users = $usersQuery->offset($pagination->offset)
                 ->limit($pagination->limit)
