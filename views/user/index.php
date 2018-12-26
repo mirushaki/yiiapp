@@ -3,6 +3,7 @@
 /** @var $users app\models\Users[]*/
 /** @var $pagination \yii\data\Pagination */
 
+use app\widgets\LinkPager2\LinkPager2;
 use yii\bootstrap\Alert;
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
@@ -63,12 +64,13 @@ $this->title = 'DATA';
     echo Html::a('Show all orders', ['order/index'], ['class' => 'btn btn-secondary']);
     echo "<br>";
     echo "<br>";
-    echo LinkPager::Widget(
+    echo LinkPager2::Widget(
             [
                 'pagination' => $pagination,
                 'firstPageLabel' => 'first',
                 'lastPageLabel' => 'last',
-                'maxButtonCount' => 5
+                'maxButtonCount' => 5,
+                'totalRecordsLabelPrefix' => 'Total records:'
             ]
     );
     if(Yii::$app->session->hasFlash('message'))

@@ -7,6 +7,7 @@
  */
 
 use app\models\Users;
+use app\widgets\LinkPager2\LinkPager2;
 use yii\bootstrap\Alert;
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
@@ -77,12 +78,13 @@ use yii\widgets\LinkPager;
     echo Html::a('Add new order', ['order/add', 'userId' => $userId], ['class' => 'btn btn-primary']);
     echo "<br>";
     echo "<br>";
-    echo LinkPager::widget(
+    echo LinkPager2::widget(
             [
                 'pagination' => $pagination,
                 'firstPageLabel' => 'first',
                 'lastPageLabel' => 'last',
-                'maxButtonCount' => 5
+                'maxButtonCount' => 5,
+                'totalRecordsLabelPrefix' => 'Total records:'
             ]
     );
     if(Yii::$app->session->hasFlash('message'))
