@@ -18,6 +18,7 @@ use yii\web\Controller;
 
 class OrderController extends Controller
 {
+    private const PAGE_SIZE = 5;
     public function actions() {
         return [
             'error' => [
@@ -27,16 +28,35 @@ class OrderController extends Controller
     }
     public function actionIndex($userId = null)
     {
+        $ordersQuery = Orders::find();
+
         if($userId) {
             $user = Users::findOne(['id' => $userId]);
-            $orders = Orders::findAll(['user_id' => $userId]);
+
+            $pagination = new Pagination([
+                'totalCount' => $ordersQuery->where(['user_id' => $userId])->count(),
+                'pageSize' => self::PAGE_SIZE
+            ]);
+
+            $orders = $ordersQuery->offset($pagination->offset)
+                ->limit($pagination->limit)
+                ->where(['user_id' => $userId])
+                ->all();
         }
         else {
             $user = Users::ALL;
-            $orders = Orders::find()->all();
+
+            $pagination = new Pagination([
+                'totalCount' => $ordersQuery->count(),
+                'pageSize' => self::PAGE_SIZE
+            ]);
+
+            $orders = $ordersQuery->offset($pagination->offset)
+                ->limit($pagination->limit)
+                ->all();
         }
 
-        return $this->render('index', ['orders' => $orders, 'user' => $user]);
+        return $this->render('index', ['orders' => $orders, 'user' => $user, 'pagination' => $pagination]);
     }
 
     public function actionAdd($userId = null)

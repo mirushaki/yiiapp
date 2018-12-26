@@ -9,11 +9,14 @@
 use app\models\Users;
 use yii\bootstrap\Alert;
 use yii\helpers\Html;
+use yii\widgets\LinkPager;
+
 \app\assets\BootBoxAsset::register($this);
 \app\assets\BootBoxAsset::overrideSystemConfirm();
 
 /** @var $orders app\models\Orders [] */
 /** @var $user app\models\Users */
+/** @var $patination yii\data\Pagination */
 
 ?>
 <div id="data-orders">
@@ -74,6 +77,9 @@ use yii\helpers\Html;
     echo Html::a('Add new order', ['order/add', 'userId' => $userId], ['class' => 'btn btn-primary']);
     echo "<br>";
     echo "<br>";
+    echo LinkPager::widget(
+            ['pagination' => $pagination]
+    );
     if(Yii::$app->session->hasFlash('message'))
     {
         echo Alert::widget([
