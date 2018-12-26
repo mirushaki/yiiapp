@@ -57,6 +57,9 @@ $config = [
             'rules' => [
             ]
         ],
+        'formatter' => [
+            'locale' => 'ka-GE'
+        ]
 
     ],
     //'catchAll' => ['site/under-construction'],

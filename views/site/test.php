@@ -59,6 +59,12 @@ $this->params['breadcrumbs'][] = $this->title;
         );
     }
 
+    $formatter = Yii::$app->formatter;
+    $t = 10000;
+
+    echo $formatter->asDate('2012-12-15', 'short');
+    echo "<br>";
+
     echo jui\DatePicker::widget([
             'dateFormat' => 'php: m/d/Y',
             'language' => 'ka-GE'

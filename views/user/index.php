@@ -2,6 +2,7 @@
 /** @var $this yii\web\View */
 /** @var $users app\models\Users[]*/
 /** @var $pagination \yii\data\Pagination */
+/** @var $sort \yii\data\Sort */
 
 use app\widgets\LinkPager2\LinkPager2;
 use yii\bootstrap\Alert;
@@ -23,8 +24,8 @@ $this->title = 'DATA';
         <thead>
             <tr>
                 <td>Id</td>
-                <td>First Name</td>
-                <td>Last Name</td>
+                <td><?php echo $sort->link('firstName') ?></td>
+                <td><?php echo $sort->link('lastName') ?></td>
                 <td>E-mail</td>
                 <td>Details</td>
                 <td>Orders</td>
