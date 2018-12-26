@@ -12,6 +12,7 @@ namespace app\controllers;
 use app\models\Orders;
 use app\models\Users;
 use Exception;
+use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 
@@ -34,6 +35,7 @@ class OrderController extends Controller
             $user = Users::ALL;
             $orders = Orders::find()->all();
         }
+
         return $this->render('index', ['orders' => $orders, 'user' => $user]);
     }
 

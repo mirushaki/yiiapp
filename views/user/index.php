@@ -1,9 +1,11 @@
 <?php
 /** @var $this yii\web\View */
 /** @var $users app\models\Users[]*/
+/** @var $pagination \yii\data\Pagination */
 
 use yii\bootstrap\Alert;
 use yii\helpers\Html;
+use yii\widgets\LinkPager;
 
 //\app\assets\CustomAsset::register($this);
 
@@ -61,6 +63,9 @@ $this->title = 'DATA';
     echo Html::a('Show all orders', ['order/index'], ['class' => 'btn btn-secondary']);
     echo "<br>";
     echo "<br>";
+    echo LinkPager::Widget(
+            ['pagination' => $pagination]
+    );
     if(Yii::$app->session->hasFlash('message'))
     {
         echo Alert::widget([

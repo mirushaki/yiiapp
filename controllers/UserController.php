@@ -11,6 +11,7 @@ namespace app\controllers;
 
 use app\models\Users;
 use Exception;
+use yii\data\Pagination;
 use yii\web\Controller;
 
 class UserController extends Controller
@@ -28,8 +29,18 @@ class UserController extends Controller
     {
         try
         {
-            $users = Users::find()->all();
-            return $this->render('index', ['users' => $users]);
+            $usersQuery = Users::find();
+
+            $pagination = new Pagination([
+                'totalCount' => $usersQuery->count(),
+                'pageSize' => 5
+            ]);
+
+            $users = $usersQuery->offset($pagination->offset)
+                ->limit($pagination->limit)
+                ->all();
+
+            return $this->render('index', ['users' => $users, 'pagination' => $pagination]);
         }
         catch (Exception $e) {
             \Yii::$app->session->setFlash('message', 'Failed to get user list');
