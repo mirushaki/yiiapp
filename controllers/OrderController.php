@@ -17,13 +17,24 @@ use yii\web\Controller;
 
 class OrderController extends Controller
 {
+    public function actions() {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction'
+            ]
+        ];
+    }
     public function actionIndex($userId = null)
     {
-        if($userId)
+        if($userId) {
+            $user = Users::findOne(['id' => $userId]);
             $orders = Orders::findAll(['user_id' => $userId]);
-        else
+        }
+        else {
+            $user = Users::ALL;
             $orders = Orders::find()->all();
-        return $this->render('index', ['orders' => $orders]);
+        }
+        return $this->render('index', ['orders' => $orders, 'user' => $user]);
     }
 
     public function actionAdd($userId = null)

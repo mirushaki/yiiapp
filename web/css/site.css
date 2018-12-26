@@ -119,3 +119,13 @@ a.desc:after {
     white-space: nowrap;
     width: 1%;
 }
+
+.table thead
+{
+    text-align: center;
+}
+
+.table tbody tr td
+{
+    vertical-align: middle;
+}

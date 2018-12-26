@@ -19,6 +19,9 @@ class Users extends ActiveRecord
     public $lastName;
     public $eMail;
 */
+
+    public const ALL = 'All users';
+
     public function getOrders()
     {
         return $this->hasMany(Orders::className(), ['user_id' => 'id']);

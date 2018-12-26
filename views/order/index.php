@@ -6,28 +6,34 @@
  * Time: 4:51 PM
  */
 
+use app\models\Users;
 use yii\bootstrap\Alert;
 use yii\helpers\Html;
 \app\assets\BootBoxAsset::register($this);
 \app\assets\BootBoxAsset::overrideSystemConfirm();
 
-/** @var $orders app\models\Orders[] */
-/** @var $userId integer */
+/** @var $orders app\models\Orders [] */
+/** @var $user app\models\Users */
 
 ?>
 <div id="data-orders">
     <?php
+    if($user == Users::ALL) {
+        $fullName = $user;
+    }
+    else {
+        $fullName = "$user->firstName $user->lastName";
+    }
 
     if(empty($orders))
     {
-        echo "<h2>User has no orders</h2>";
+        echo "<h2>User - $fullName has no orders</h2>";
     }
     else
     {
         ?>
         <div id="Orders">
-            <?php $text = $orders[0]->user->firstName . ' ' .$orders[0]->user->lastName ?>
-            <?php echo "<h1>Orders - $text</h1>" ?>
+            <?php echo "<h1>Orders - $fullName</h1>" ?>
 
             <table class="table table-responsive table-bordered table-hover table-striped table-fit">
                 <thead>
