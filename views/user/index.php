@@ -64,7 +64,12 @@ $this->title = 'DATA';
     echo "<br>";
     echo "<br>";
     echo LinkPager::Widget(
-            ['pagination' => $pagination]
+            [
+                'pagination' => $pagination,
+                'firstPageLabel' => 'first',
+                'lastPageLabel' => 'last',
+                'maxButtonCount' => 5
+            ]
     );
     if(Yii::$app->session->hasFlash('message'))
     {

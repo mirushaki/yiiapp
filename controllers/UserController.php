@@ -33,7 +33,7 @@ class UserController extends Controller
 
             $pagination = new Pagination([
                 'totalCount' => $usersQuery->count(),
-                'pageSize' => 5
+                'pageSize' => 2,
             ]);
 
             $users = $usersQuery->offset($pagination->offset)

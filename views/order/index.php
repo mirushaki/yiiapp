@@ -16,7 +16,7 @@ use yii\widgets\LinkPager;
 
 /** @var $orders app\models\Orders [] */
 /** @var $user app\models\Users */
-/** @var $patination yii\data\Pagination */
+/** @var $pagination yii\data\Pagination */
 
 ?>
 <div id="data-orders">
@@ -78,7 +78,12 @@ use yii\widgets\LinkPager;
     echo "<br>";
     echo "<br>";
     echo LinkPager::widget(
-            ['pagination' => $pagination]
+            [
+                'pagination' => $pagination,
+                'firstPageLabel' => 'first',
+                'lastPageLabel' => 'last',
+                'maxButtonCount' => 5
+            ]
     );
     if(Yii::$app->session->hasFlash('message'))
     {
