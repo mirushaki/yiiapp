@@ -2,6 +2,7 @@
 /** @var $this yii\web\View */
 /** @var $users app\models\Users[]*/
 /** @var $dataProvider \yii\data\ActiveDataProvider */
+/** @var $searchModel \app\models\UsersSearch */
 
 use app\widgets\LinkPager2\LinkPager2;
 use yii\bootstrap\Alert;
@@ -17,14 +18,14 @@ $this->title = 'DATA';
 
 ?>
 <div class="user-index">
-    <div id="Users">
+    <!--<div id="Users">
         <h1>Users</h1>
     <table class="table table-responsive table-bordered table-hover table-striped table-fit">
         <thead>
             <tr>
                 <td>Id</td>
-                <td><?php echo $dataProvider->getSort()->link('firstName') ?></td>
-                <td><?php echo $dataProvider->getSort()->link('lastName') ?></td>
+                <td><?php /*echo $dataProvider->getSort()->link('firstName') */?></td>
+                <td><?php /*echo $dataProvider->getSort()->link('lastName') */?></td>
                 <td>E-mail</td>
                 <td>Details</td>
                 <td>Orders</td>
@@ -33,7 +34,7 @@ $this->title = 'DATA';
         </thead>
         <tbody>
             <?php
-                foreach($users as $user)
+/*                foreach($users as $user)
                 {
                     echo "<tr>";
                     foreach($user as $key=>$value)
@@ -54,35 +55,26 @@ $this->title = 'DATA';
                     echo "</td>";
                     echo "</tr>";
                 }
-            ?>
+            */?>
         </tbody>
     </table>
-    </div>
+    </div>-->
     <br >
     <?php
     echo Html::a('Add user', ['user/add'], ['class' => 'btn btn-primary']);
     echo Html::a('Show all orders', ['order/index'], ['class' => 'btn btn-secondary']);
     echo "<br>";
     echo "<br>";
-    echo LinkPager2::Widget([
-                'pagination' => $dataProvider->getPagination(),
-                'firstPageLabel' => 'first',
-                'lastPageLabel' => 'last',
-                'maxButtonCount' => 5,
-                'totalRecordsLabelPrefix' => 'Total records:'
-            ]);
-
     echo GridView::widget([
-        'dataProvider' => $dataProvider,
+        'dataProvider' => $dataProvider,/*
+        'caption' => 'Users',
+        'captionOptions' => ['class' => 'h1', 'style' => ['text-align' => 'center']],*/
+        'filterModel' => $searchModel,
         'columns' => [
-                [
-                    'header' => 'KK',
-                    'attribute'=>'lastName',
-                    'filter'=>[0=>"GOOD",1=>"BAD"]
-                ],
-            'firstName',
-            'lastName',
-            'eMail'
+                'id',
+                'firstName',
+                'lastName',
+                'eMail'
         ]
     ]);
 
