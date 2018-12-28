@@ -26,9 +26,16 @@ $this->title = 'DATA';
     echo "<br>";
     echo "<br>";
     echo GridView::widget([
-        'dataProvider' => $dataProvider,/*
+        'dataProvider' => $dataProvider,
+        'layout' => '{items}{summary}{pager}',
+        'pager' => [
+            'firstPageLabel' => 'first',
+            'lastPageLabel' => 'last'
+        ],
         'caption' => 'Users',
-        'captionOptions' => ['class' => 'h1', 'style' => ['text-align' => 'center']],*/
+        'captionOptions' => ['class' => 'h2', 'style' => ['text-align' => 'center']],
+        'emptyText' => 'no users found',
+        'emptyTextOptions' => ['class' => 'h4', 'style' => ['text-align' => 'center']],
         'filterModel' => $searchModel,
         'columns' => [
                 'id',
@@ -38,6 +45,7 @@ $this->title = 'DATA';
                 [
                     'class' => ActionColumn::class,
                     'template' => '{view} {delete} {orders}',
+                    'contentOptions' => ['style' => ['text-align' => 'center']],
                     'buttons' => [
                             'view' => function($url, $model, $key) {
                                 return Html::a('Details', $url, ['class' => 'btn btn-info']);

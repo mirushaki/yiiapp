@@ -9,35 +9,69 @@
 use app\models\Users;
 use app\widgets\LinkPager2\LinkPager2;
 use yii\bootstrap\Alert;
+use yii\grid\ActionColumn;
+use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\LinkPager;
 
 \app\assets\BootBoxAsset::register($this);
 \app\assets\BootBoxAsset::overrideSystemConfirm();
 
-/** @var $orders app\models\Orders [] */
 /** @var $user app\models\Users */
-/** @var $pagination yii\data\Pagination */
+/** @var $dataProvider yii\data\ActiveDataProvider */
 
 ?>
 <div id="data-orders">
     <?php
-    if($user == Users::ALL) {
-        $fullName = $user;
-    }
-    else {
-        $fullName = "$user->firstName $user->lastName";
-    }
+    $fullName = ($user == Users::ALL) ? $user :  "\"$user->firstName $user->lastName\"";
+?>
+    <div id="Orders">
 
-    if(empty($orders))
-    {
-        echo "<h2>User - $fullName has no orders</h2>";
-    }
-    else
-    {
-        ?>
-        <div id="Orders">
-            <?php echo "<h1>Orders - $fullName</h1>" ?>
+            <?php
+            echo GridView::widget([
+                'dataProvider' => $dataProvider,
+                'layout' => '{items}{summary}{pager}',
+                'tableOptions' => ['class' => 'table table-bordered table-stripped table-responsive table-fit'],
+                'caption' => 'Orders - ' . $fullName,
+                'captionOptions' => ['class' => 'h2', 'style' => 'text-align: center'],
+                'emptyText' => 'User - ' . $fullName .' has no orders',
+                'emptyTextOptions' => ['class' => 'h4', 'style' => ['text-align' => 'center']],
+                'pager' => [
+                    'firstPageLabel' => 'first',
+                    'lastPageLabel' => 'last',
+                ],
+                'columns' => [
+                    'id',
+                    'number',
+                    [
+                        'class' => ActionColumn::class,
+                        'template' => '{view} {delete}',
+                        'contentOptions' => ['style' => ['text-align' => 'center']],
+                        'buttons' => [
+                            'view' => function($url, $model, $key)
+                            {
+                                return Html::a('Details', $url, ['class' => 'btn btn-info']);
+                            },
+                            'delete' => function($url, $model, $key)
+                            {
+                                return Html::a('Delete', $url, ['class' => 'btn btn-danger']);
+                            },
+                        ],
+                        'urlCreator' => function($action, $model, $key, $index, $actionColumn)
+                        {
+                            if($action == 'view')
+                            {
+                                return Url::to(['order/form', 'id' => $model->id]);
+                            }
+                            else
+                                return Url::to(['order/' . $action, 'id' => $model->id]);
+                        }
+                    ]
+                ]
+            ])
+
+            /*echo "<h1>Orders - $fullName</h1>" */?><!--
 
             <table class="table table-responsive table-bordered table-hover table-striped table-fit">
                 <thead>
@@ -50,7 +84,7 @@ use yii\widgets\LinkPager;
                 </thead>
                 <tbody>
                 <?php
-                foreach($orders as $order) {
+/*                foreach($orders as $order) {
                     $userId = $order->user_id;
                     echo "<tr>";
                     foreach ($order as $key => $value) {
@@ -70,15 +104,15 @@ use yii\widgets\LinkPager;
                     echo '</td>';
                     echo "</tr>";
                 }
-                ?>
+                */?>
                 </tbody>
             </table>
         </div>
-    <?php }
+    --><?php
     echo Html::a('Add new order', ['order/add', 'userId' => ($user == Users::ALL) ? '' : $user->id], ['class' => 'btn btn-primary']);
     echo "<br>";
     echo "<br>";
-    echo LinkPager2::widget(
+    /*echo LinkPager2::widget(
             [
                 'pagination' => $pagination,
                 'firstPageLabel' => 'first',
@@ -86,7 +120,7 @@ use yii\widgets\LinkPager;
                 'maxButtonCount' => 5,
                 'totalRecordsLabelPrefix' => 'Total records:'
             ]
-    );
+    );*/
     if(Yii::$app->session->hasFlash('message'))
     {
         echo Alert::widget([

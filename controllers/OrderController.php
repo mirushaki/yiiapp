@@ -12,6 +12,7 @@ namespace app\controllers;
 use app\models\Orders;
 use app\models\Users;
 use Exception;
+use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -29,34 +30,23 @@ class OrderController extends Controller
     public function actionIndex($userId = null)
     {
         $ordersQuery = Orders::find();
+        $user = Users::ALL;
 
         if($userId) {
             $user = Users::findOne(['id' => $userId]);
-
-            $pagination = new Pagination([
-                'totalCount' => $ordersQuery->where(['user_id' => $userId])->count(),
-                'pageSize' => self::PAGE_SIZE
-            ]);
-
-            $orders = $ordersQuery->offset($pagination->offset)
-                ->limit($pagination->limit)
-                ->where(['user_id' => $userId])
-                ->all();
+            $ordersQuery = $ordersQuery->where(['user_id' => $userId]);
         }
-        else {
-            $user = Users::ALL;
+        $pagination = new Pagination([
+            'totalCount' => $ordersQuery->count(),
+            'pageSize' => self::PAGE_SIZE
+        ]);
 
-            $pagination = new Pagination([
-                'totalCount' => $ordersQuery->count(),
-                'pageSize' => self::PAGE_SIZE
-            ]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $ordersQuery,
+            'pagination' => $pagination
+        ]);
 
-            $orders = $ordersQuery->offset($pagination->offset)
-                ->limit($pagination->limit)
-                ->all();
-        }
-
-        return $this->render('index', ['orders' => $orders, 'user' => $user, 'pagination' => $pagination]);
+        return $this->render('index', ['user' => $user, 'dataProvider' => $dataProvider]);
     }
 
     public function actionAdd($userId = null)
