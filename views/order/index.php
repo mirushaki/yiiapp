@@ -75,7 +75,7 @@ use yii\widgets\LinkPager;
             </table>
         </div>
     <?php }
-    echo Html::a('Add new order', ['order/add', 'userId' => $user->id], ['class' => 'btn btn-primary']);
+    echo Html::a('Add new order', ['order/add', 'userId' => ($user == Users::ALL) ? '' : $user->id], ['class' => 'btn btn-primary']);
     echo "<br>";
     echo "<br>";
     echo LinkPager2::widget(

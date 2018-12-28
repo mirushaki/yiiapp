@@ -1,13 +1,14 @@
 <?php
 /** @var $this yii\web\View */
-/** @var $users app\models\Users[]*/
 /** @var $dataProvider \yii\data\ActiveDataProvider */
 /** @var $searchModel \app\models\UsersSearch */
 
 use app\widgets\LinkPager2\LinkPager2;
 use yii\bootstrap\Alert;
+use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 //\app\assets\CustomAsset::register($this);
 
@@ -18,48 +19,7 @@ $this->title = 'DATA';
 
 ?>
 <div class="user-index">
-    <!--<div id="Users">
-        <h1>Users</h1>
-    <table class="table table-responsive table-bordered table-hover table-striped table-fit">
-        <thead>
-            <tr>
-                <td>Id</td>
-                <td><?php /*echo $dataProvider->getSort()->link('firstName') */?></td>
-                <td><?php /*echo $dataProvider->getSort()->link('lastName') */?></td>
-                <td>E-mail</td>
-                <td>Details</td>
-                <td>Orders</td>
-                <td>Delete</td>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-/*                foreach($users as $user)
-                {
-                    echo "<tr>";
-                    foreach($user as $key=>$value)
-                        echo "<td>" . $value ."</td>";
-                    echo "<td>";
-                    echo Html::a('details', ['user/form', 'id' => $user->id], ['class' => 'btn btn-info']);
-                    echo "</td>";
-                    echo "<td>";
-                    echo Html::a('orders', ['order/index', 'userId' => $user->id], ['class' => 'btn btn-warning']);
-                    echo "</td>";
-                    echo "<td>";
-                    echo Html::a('delete', ['user/delete', 'id' => $user->id],
-                        ['class' => 'btn btn-danger',
-                         'data' => [
-                                 'confirm' => 'Are you sure?'
-                         ]
-                        ]);
-                    echo "</td>";
-                    echo "</tr>";
-                }
-            */?>
-        </tbody>
-    </table>
-    </div>-->
-    <br >
+    <br>
     <?php
     echo Html::a('Add user', ['user/add'], ['class' => 'btn btn-primary']);
     echo Html::a('Show all orders', ['order/index'], ['class' => 'btn btn-secondary']);
@@ -74,9 +34,37 @@ $this->title = 'DATA';
                 'id',
                 'firstName',
                 'lastName',
-                'eMail'
-        ]
-    ]);
+                'eMail',
+                [
+                    'class' => ActionColumn::class,
+                    'template' => '{view} {delete} {orders}',
+                    'buttons' => [
+                            'view' => function($url, $model, $key) {
+                                return Html::a('Details', $url, ['class' => 'btn btn-info']);
+                            },
+                            'delete' => function($url, $model, $key) {
+                                return Html::a('Delete', $url, ['class' => 'btn btn-danger', 'data' => [
+                                    'confirm' => 'Are you sure?'
+                                ]]);
+                            },
+                            'orders' => function($url, $model, $key) {
+                                return Html::a('Orders', $url, ['class' => 'btn btn-warning']);
+                            }
+                    ],
+                    'urlCreator' => function ($action, $model, $key, $index, $actionCol) {
+                        if($action == 'view') {
+                            return Url::to(['user/form', 'id' => $model->id]);
+                        }
+                        else if($action == 'orders') {
+                            return Url::to(['order/index', 'userId' => $model->id]);
+                        }
+                        else {
+                            return Url::to(['user/'.$action, 'id' => $model->id]);
+                        }
+                    }
+                ]
+            ]
+        ]);
 
     if(Yii::$app->session->hasFlash('message'))
     {

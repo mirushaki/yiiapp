@@ -88,12 +88,12 @@ class OrderController extends Controller
     {
         $request = \Yii::$app->request;
 
+        $allUsers = Users::find()->all();
+        $users = ArrayHelper::map($allUsers, 'id', 'firstName');
+
         $order = Orders::find()
             ->where(['id' => $id])
             ->one();
-
-        $allUsers = Users::find()->all();
-        $users = ArrayHelper::map($allUsers, 'id', 'firstName');
 
         if(!$order) {
             $order = new Orders();
@@ -101,7 +101,6 @@ class OrderController extends Controller
         }
 
         if($request->isGet) {
-            var_dump($order->attributes);
             return $this->render('form', ['order' => $order,'users' => $users]);
         }
         else if($request->isPost)
@@ -134,8 +133,8 @@ class OrderController extends Controller
                 \Yii::$app->session->setFlash('message-class', 'alert-danger');
                 throw new Exception('An unexpected error has occured');
             }
+            return $this->redirect(['order/index', 'userId' => $userId]);
         }
-        return $this->redirect(['order/index']);
     }
 
 }

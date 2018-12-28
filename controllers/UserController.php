@@ -30,40 +30,12 @@ class UserController extends Controller
 
     public function actionIndex()
     {
-        /*var_dump(\Yii::$app->request->get());exit;*/
         try
         {
             $usersSearch = new UsersSearch();
-            if(\Yii::$app->request->get('UsersSearch')) {
-                $dataProvider = $usersSearch->Search(\Yii::$app->request->get('UsersSearch'));/*
-                var_dump($dataProvider);
-                exit;*/
-            }
-            else {
-                $dataProvider = new ActiveDataProvider([
-                    'query' => Users::find(),
-                    'pagination' => [
-                        'pageSize' => 2
-                    ],
-                    'sort' => [
-                        'attributes' => [
-                            'firstName',
-                            'lastName'
-                        ],
-                        'enableMultiSort' => true,
-                        'defaultOrder' => [
-                            'lastName' => SORT_DESC
-                        ]
-                    ]
-                ]);
-            }
+            $dataProvider = $usersSearch->Search(\Yii::$app->request->get('UsersSearch'));
 
-            /*$users = $usersQuery->offset($pagination->offset)
-                ->limit($pagination->limit)
-                ->orderBy($sort->orders)
-                ->all();*/
-
-            return $this->render('index', ['users' => $dataProvider->getModels(),'dataProvider' => $dataProvider, 'searchModel' => $usersSearch]);
+            return $this->render('index', ['dataProvider' => $dataProvider, 'searchModel' => $usersSearch]);
         }
         catch (Exception $e) {
             \Yii::$app->session->setFlash('message', 'Failed to get user list');

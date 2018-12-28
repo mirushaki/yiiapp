@@ -13,8 +13,6 @@ use yii\data\ActiveDataProvider;
 
 class UsersSearch extends Users
 {
-    public $lastName;
-
     public function rules()
     {
         return [
@@ -43,14 +41,13 @@ class UsersSearch extends Users
                 ]
             ]);
 
-        if (!($this->load($_GET))) {
+        if (!($this->load($_GET)) && !$this->validate()) {
             return $dataProvider;
-
         }
 
         $query->andFilterWhere(['like', 'firstName', $this->firstName]);
         $query->andFilterWhere(['like', 'lastName', $this->lastName]);
+
         return $dataProvider;
     }
-
 }
