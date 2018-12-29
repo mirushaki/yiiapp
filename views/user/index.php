@@ -27,16 +27,14 @@ $this->title = 'DATA';
     echo "<br>";
     echo GridView::widget([
         'dataProvider' => $dataProvider,
-        'layout' => '{items}{summary}{pager}',
-        'pager' => [
-            'firstPageLabel' => 'first',
-            'lastPageLabel' => 'last'
-        ],
+        'filterModel' => $searchModel,
+        'options' => ['style' => ['margin' => '0 auto', 'white-space' => 'nowrap', 'width' => 'fit-content']],
+        'layout' => '{items}{summary}{pager}'.$this->render('_controlButtons.php'),
+        'tableOptions' => ['class' => 'table table-bordered table-striped table-responsive table-centered'],
         'caption' => 'Users',
         'captionOptions' => ['class' => 'h2', 'style' => ['text-align' => 'center']],
         'emptyText' => 'no users found',
         'emptyTextOptions' => ['class' => 'h4', 'style' => ['text-align' => 'center']],
-        'filterModel' => $searchModel,
         'columns' => [
                 'id',
                 'firstName',
@@ -71,9 +69,15 @@ $this->title = 'DATA';
                         }
                     }
                 ]
-            ]
+            ],
+        'pager' => [
+            'firstPageLabel' => 'first',
+            'lastPageLabel' => 'last',
+            'hideOnSinglePage' => false
+        ]
         ]);
-
+    echo "<br>";
+    echo "<br>";
     if(Yii::$app->session->hasFlash('message'))
     {
         echo Alert::widget([

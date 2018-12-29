@@ -27,7 +27,7 @@ class UsersSearch extends Users
         $dataProvider = new ActiveDataProvider([
                 'query' => $query,
                 'pagination' => [
-                    'pageSize' => 2
+                    'pageSize' => 2,
                 ],
                 'sort' => [
                     'attributes' => [

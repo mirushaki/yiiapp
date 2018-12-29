@@ -120,12 +120,23 @@ a.desc:after {
     width: 1%;
 }
 
-.table thead
+.table-centered
+{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.table-centered tbody tr td
+{
+    vertical-align: middle;
+}
+
+.table-centered thead
 {
     text-align: center;
 }
 
-.table tbody tr td
-{
-    vertical-align: middle;
+.centered {
+    margin-left: auto;
+    margin-right: auto;
 }

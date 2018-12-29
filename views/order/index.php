@@ -18,6 +18,7 @@ use yii\widgets\LinkPager;
 \app\assets\BootBoxAsset::register($this);
 \app\assets\BootBoxAsset::overrideSystemConfirm();
 
+/** @var $this \yii\web\View */
 /** @var $user app\models\Users */
 /** @var $dataProvider yii\data\ActiveDataProvider */
 
@@ -31,16 +32,13 @@ use yii\widgets\LinkPager;
             <?php
             echo GridView::widget([
                 'dataProvider' => $dataProvider,
-                'layout' => '{items}{summary}{pager}',
-                'tableOptions' => ['class' => 'table table-bordered table-stripped table-responsive table-fit'],
+                'options' => ['style' => ['margin' => '0 auto', 'white-space' => 'nowrap', 'width' => 'fit-content']],
+                'layout' => '{items}{summary}{pager}'.$this->render('_controlButtons.php', ['user' => $user]),
                 'caption' => 'Orders - ' . $fullName,
                 'captionOptions' => ['class' => 'h2', 'style' => 'text-align: center'],
+                'tableOptions' => ['class' => 'table table-bordered table-stripped table-responsive table-centered'],
                 'emptyText' => 'User - ' . $fullName .' has no orders',
                 'emptyTextOptions' => ['class' => 'h4', 'style' => ['text-align' => 'center']],
-                'pager' => [
-                    'firstPageLabel' => 'first',
-                    'lastPageLabel' => 'last',
-                ],
                 'columns' => [
                     'id',
                     'number',
@@ -68,48 +66,13 @@ use yii\widgets\LinkPager;
                                 return Url::to(['order/' . $action, 'id' => $model->id]);
                         }
                     ]
-                ]
-            ])
-
-            /*echo "<h1>Orders - $fullName</h1>" */?><!--
-
-            <table class="table table-responsive table-bordered table-hover table-striped table-fit">
-                <thead>
-                <tr>
-                    <td>Id</td>
-                    <td>Number</td>
-                    <td>Details</td>
-                    <td>Delete</td>
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-/*                foreach($orders as $order) {
-                    $userId = $order->user_id;
-                    echo "<tr>";
-                    foreach ($order as $key => $value) {
-                        if($key != 'user_id')
-                            echo "<td>" . $value . "</td>";
-                    }
-                    echo '<td>';
-                    echo Html::a('details', ['order/form', 'id' => $order->id], ['class' => 'btn btn-info']);
-                    echo '</td>';
-                    echo '<td>';
-                    echo Html::a('delete', ['order/delete', 'id' => $order->id], [
-                            'class' => 'btn btn-danger',
-                            'data' => [
-                                    'confirm' => 'Are you sure?'
-                            ]
-                    ]);
-                    echo '</td>';
-                    echo "</tr>";
-                }
-                */?>
-                </tbody>
-            </table>
-        </div>
-    --><?php
-    echo Html::a('Add new order', ['order/add', 'userId' => ($user == Users::ALL) ? '' : $user->id], ['class' => 'btn btn-primary']);
+                ],
+                'pager' => [
+                    'firstPageLabel' => 'first',
+                    'lastPageLabel' => 'last',
+                    'hideOnSinglePage' => false
+                ],
+            ]);
     echo "<br>";
     echo "<br>";
     /*echo LinkPager2::widget(
