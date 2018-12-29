@@ -46,7 +46,8 @@ $config = [
         'assetManager' => [
             'bundles' => [
                 'app\assets\CustomAsset' => [],
-                'app\assets\BootBoxAsset' => []
+                'app\assets\BootBoxAsset' => [],
+                'app\assets\UserAsset' => []
             ],
             'linkAssets' => true,
             'appendTimestamp' => true

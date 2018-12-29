@@ -10,7 +10,7 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-//\app\assets\CustomAsset::register($this);
+\app\assets\UserAsset::register($this);
 
 \app\assets\BootBoxAsset::register($this);
 \app\assets\BootBoxAsset::overrideSystemConfirm();
@@ -48,7 +48,7 @@ $this->title = 'DATA';
                                 return Html::a('Details', $url, ['class' => 'btn btn-info']);
                             },
                             'delete' => function($url, $model, $key) {
-                                return Html::a('Delete', $url, ['class' => 'btn btn-danger', 'data' => [
+                                return Html::a('Delete', $url, ['class' => 'btn btn-danger btn-user-delete', 'data' => [
                                     'confirm' => 'Are you sure?'
                                 ]]);
                             },
@@ -62,10 +62,10 @@ $this->title = 'DATA';
                         }
                         else if($action == 'orders') {
                             return Url::to(['order/index', 'userId' => $model->id]);
-                        }
+                        }/*
                         else {
                             return Url::to(['user/'.$action, 'id' => $model->id]);
-                        }
+                        }*/
                     }
                 ]
             ],

@@ -49,13 +49,10 @@ class UserController extends Controller
         return $this->redirect(['user/form']);
     }
 
-    public function actionDelete($id)
+    public function actionDelete($ids)
     {
         try {
-            Users::find()
-                ->where(['id' => $id])
-                ->one()
-                ->delete();
+            Users::deleteAll(['in', 'id', $ids]);
 
             \Yii::$app->session->setFlash('message', 'The selected user has been deleted');
             \Yii::$app->session->setFlash('message-class', 'alert-danger');
