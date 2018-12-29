@@ -43,7 +43,8 @@ class OrderController extends Controller
 
         $dataProvider = new ActiveDataProvider([
             'query' => $ordersQuery,
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            'sort' => false
         ]);
 
         return $this->render('index', ['user' => $user, 'dataProvider' => $dataProvider]);

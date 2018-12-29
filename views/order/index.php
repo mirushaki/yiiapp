@@ -27,8 +27,6 @@ use yii\widgets\LinkPager;
     <?php
     $fullName = ($user == Users::ALL) ? $user :  "\"$user->firstName $user->lastName\"";
 ?>
-    <div id="Orders">
-
             <?php
             echo GridView::widget([
                 'dataProvider' => $dataProvider,
@@ -72,6 +70,9 @@ use yii\widgets\LinkPager;
                     'lastPageLabel' => 'last',
                     'hideOnSinglePage' => false
                 ],
+                'sorter' => [
+                        'attributes' => ['id']
+                ]
             ]);
     echo "<br>";
     echo "<br>";

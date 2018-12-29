@@ -32,6 +32,9 @@ $this->title = 'DATA';
         'emptyText' => 'no users found',
         'emptyTextOptions' => ['class' => 'h4', 'style' => ['text-align' => 'center']],
         'columns' => [
+                [
+                        'class' => 'yii\grid\CheckboxColumn'
+                ],
                 'id',
                 'firstName',
                 'lastName',

@@ -13,12 +13,6 @@ use yii\helpers\Html;
 
 ?>
 <div class="control-buttons">
-    <div class="row">
-        <div class="col-md-2">
-            <?php echo Html::a('Add new user', ['user/add'], ['class' => 'btn btn-primary']) ?>
-        </div>
-        <div class="col-md-2">
-            <?php echo Html::a('Show all orders', ['order/index'], ['class' => 'btn btn-secondary']) ?>
-        </div>
-    </div>
+       <?php echo Html::a('Add new user', ['user/add'], ['class' => 'btn btn-primary']) ?>
+       <?php echo Html::a('Show all orders', ['order/index'], ['class' => 'btn btn-secondary']) ?>
 </div>
