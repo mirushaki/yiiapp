@@ -21,10 +21,6 @@ $this->title = 'DATA';
 <div class="user-index">
     <br>
     <?php
-    echo Html::a('Add user', ['user/add'], ['class' => 'btn btn-primary']);
-    echo Html::a('Show all orders', ['order/index'], ['class' => 'btn btn-secondary']);
-    echo "<br>";
-    echo "<br>";
     echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
