@@ -15,6 +15,7 @@ use Exception;
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
 use yii\data\Sort;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 
 class UserController extends Controller
@@ -49,10 +50,15 @@ class UserController extends Controller
         return $this->redirect(['user/form']);
     }
 
-    public function actionDelete($ids)
+    public function actionDelete($id = null, $ids = null)
     {
         try {
-            Users::deleteAll(['in', 'id', json_decode($ids)]);
+            if($ids)
+                Users::deleteAll(['in', 'id', json_decode($ids)]);
+            else if($id)
+                Users::findOne(['id' => $id])->delete();
+            else
+                throw new BadRequestHttpException();
 
             \Yii::$app->session->setFlash('message', 'The selected user has been deleted');
             \Yii::$app->session->setFlash('message-class', 'alert-danger');

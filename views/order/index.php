@@ -63,7 +63,7 @@ use yii\widgets\LinkPager;
                             },
                             'delete' => function($url, $model, $key)
                             {
-                                return Html::a('Delete', $url, ['class' => 'btn btn-danger']);
+                                return Html::a('Delete', $url, ['class' => 'btn btn-danger', 'data' => ['confirm' => 'Are you sure?']]);
                             },
                         ],
                         'urlCreator' => function($action, $model, $key, $index, $actionColumn)
@@ -73,7 +73,7 @@ use yii\widgets\LinkPager;
                                 return Url::to(['order/form', 'id' => $model->id]);
                             }
                             else
-                                return Url::to(['order/' . $action, 'id' => $model->id]);
+                                return Url::to(['order/' . $action, 'id' => $model->id, 'userId' => $model->user_id]);
                         }
                     ]
                 ],

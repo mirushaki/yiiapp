@@ -54,7 +54,7 @@ class OrderController extends Controller
         return $this->redirect(['order/form', 'userId' => $userId]);
     }
 
-    public function actionDelete($id)
+    public function actionDelete($id, $userId = null)
     {
         try {
             Orders::find()
@@ -64,7 +64,7 @@ class OrderController extends Controller
 
             \Yii::$app->session->setFlash('message', 'The selected order has been deleted');
             \Yii::$app->session->setFlash('message-class', 'alert-danger');
-            return $this->redirect(['order/index']);
+            return $this->redirect(['order/index', 'userId' => $userId]);
         }
         catch (\Throwable $e)
         {

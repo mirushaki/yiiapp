@@ -62,10 +62,10 @@ $this->title = 'DATA';
                         }
                         else if($action == 'orders') {
                             return Url::to(['order/index', 'userId' => $model->id]);
-                        }/*
+                        }
                         else {
                             return Url::to(['user/'.$action, 'id' => $model->id]);
-                        }*/
+                        }
                     }
                 ]
             ],

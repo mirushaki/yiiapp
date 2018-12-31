@@ -7,6 +7,11 @@ $(document).ready(function(){
 
         $('.btn-user-delete').on('click', function(){
             var keys = getSelectedRows();
-            window.location.href = '/user/delete?ids=' + encodeURIComponent(JSON.stringify(keys));
+            if (Array.isArray(keys) || keys.length) {
+                this.attr("href", "/user/delete?ids=" + encodeURIComponent(JSON.stringify(keys)));
+                return;
+            }
+            else
+                return;
         })
     });
