@@ -52,7 +52,7 @@ class UserController extends Controller
     public function actionDelete($ids)
     {
         try {
-            Users::deleteAll(['in', 'id', $ids]);
+            Users::deleteAll(['in', 'id', json_decode($ids)]);
 
             \Yii::$app->session->setFlash('message', 'The selected user has been deleted');
             \Yii::$app->session->setFlash('message-class', 'alert-danger');
