@@ -13,6 +13,7 @@ use yii\db\ActiveRecord;
 
 class Orders extends ActiveRecord
 {
+    public $fullName;
 
     public static function tableName()
     {

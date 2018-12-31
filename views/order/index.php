@@ -10,6 +10,7 @@ use app\models\Users;
 use app\widgets\LinkPager2\LinkPager2;
 use yii\bootstrap\Alert;
 use yii\grid\ActionColumn;
+use yii\grid\DataColumn;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -19,19 +20,20 @@ use yii\widgets\LinkPager;
 \app\assets\BootBoxAsset::overrideSystemConfirm();
 
 /** @var $this \yii\web\View */
-/** @var $user app\models\Users */
 /** @var $dataProvider yii\data\ActiveDataProvider */
+/** @var $searchModel app\models\OrdersSearch */
 
 ?>
 <div id="data-orders">
     <?php
-    $fullName = ($user == Users::ALL) ? $user :  "\"$user->firstName $user->lastName\"";
+    $fullName = ($searchModel->user == Users::ALL) ? Users::ALL : $searchModel->user->firstName .' '. $searchModel->user->lastName;
 ?>
             <?php
-            echo GridView::widget([
+            echo $gridView = GridView::widget([
                 'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
                 'options' => ['style' => ['margin' => '0 auto', 'white-space' => 'nowrap', 'width' => 'fit-content']],
-                'layout' => '{items}{summary}{pager}'.$this->render('_controlButtons.php', ['user' => $user]),
+                'layout' => '{items}{summary}{pager}'.$this->render('_controlButtons.php', ['user' => $searchModel->user]),
                 'caption' => 'Orders - ' . $fullName,
                 'captionOptions' => ['class' => 'h2', 'style' => 'text-align: center'],
                 'tableOptions' => ['class' => 'table table-bordered table-stripped table-responsive table-centered'],
@@ -40,6 +42,16 @@ use yii\widgets\LinkPager;
                 'columns' => [
                     'id',
                     'number',
+                    [
+                        'class' => DataColumn::class,
+                        'label' => 'User',
+                        'attribute' => 'fullName',
+                        'content' => function($model, $key, $index, $column)
+                        {
+                            return $model->user->firstName .' '. $model->user->lastName;
+                        },
+                        'visible' => ($searchModel->user == Users::ALL)
+                    ],
                     [
                         'class' => ActionColumn::class,
                         'template' => '{view} {delete}',

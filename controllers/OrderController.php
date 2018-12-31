@@ -10,6 +10,7 @@ namespace app\controllers;
 
 
 use app\models\Orders;
+use app\models\OrdersSearch;
 use app\models\Users;
 use Exception;
 use yii\data\ActiveDataProvider;
@@ -28,26 +29,24 @@ class OrderController extends Controller
         ];
     }
     public function actionIndex($userId = null)
-    {
-        $ordersQuery = Orders::find();
-        $user = Users::ALL;
-
-        if($userId) {
-            $user = Users::findOne(['id' => $userId]);
-            $ordersQuery = $ordersQuery->where(['user_id' => $userId]);
-        }
-        $pagination = new Pagination([
+    {/*
+        $ordersQuery = Orders::find();*/
+        /*$user = Users::ALL;*/
+        /*$pagination = new Pagination([
             'totalCount' => $ordersQuery->count(),
             'pageSize' => self::PAGE_SIZE
-        ]);
+        ]);*/
 
+        $ordersSearch = new OrdersSearch($userId);
+        $dataProvider = $ordersSearch->search(\Yii::$app->request->get('OrdersSearch'));
+/*
         $dataProvider = new ActiveDataProvider([
             'query' => $ordersQuery,
             'pagination' => $pagination,
             'sort' => false
-        ]);
+        ]);*/
 
-        return $this->render('index', ['user' => $user, 'dataProvider' => $dataProvider]);
+        return $this->render('index', ['dataProvider' => $dataProvider, 'searchModel' => $ordersSearch]);
     }
 
     public function actionAdd($userId = null)
