@@ -76,6 +76,7 @@ $this->title = 'DATA';
         ]
         ]);
     echo "<br>";
+    echo $this->render('_search', ['model' => $searchModel]);
     echo "<br>";
     if(Yii::$app->session->hasFlash('message'))
     {
