@@ -15,6 +15,7 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
+use yii\widgets\Pjax;
 
 \app\assets\BootBoxAsset::register($this);
 \app\assets\BootBoxAsset::overrideSystemConfirm();
@@ -26,6 +27,7 @@ use yii\widgets\LinkPager;
 ?>
 <div id="data-orders">
     <?php
+    Pjax::begin();
     $fullName = ($searchModel->user == Users::ALL) ? Users::ALL : $searchModel->user->firstName .' '. $searchModel->user->lastName;
 ?>
             <?php
@@ -86,6 +88,7 @@ use yii\widgets\LinkPager;
                         'attributes' => ['id']
                 ]
             ]);
+    Pjax::end();
     echo "<br>";
     echo "<br>";
     /*echo LinkPager2::widget(
