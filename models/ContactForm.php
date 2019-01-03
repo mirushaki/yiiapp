@@ -62,4 +62,10 @@ class ContactForm extends Model
         }
         return false;
     }
+
+    //To do...
+    public function applyTemplate($template)
+    {
+        //
+    }
 }
