@@ -1,0 +1,24 @@
+.mail-header-image {
+    background-image: linear-gradient(blue, cyan);
+    width: 100%;
+    height: 100px;
+}
+
+.mail-html {
+    font-size: 14px;
+    color: blue;
+}
+
+.mail-html .title {
+    font-size: 18px;
+    text-decoration-line: underline;
+    text-decoration-style: wavy;
+    color: cornflowerblue;
+    text-align: center;
+}
+
+.mail-footer-image {
+    background-image: linear-gradient(cyan, blue);
+    width: 100%;
+    height: 50px;
+}

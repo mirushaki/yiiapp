@@ -18,6 +18,9 @@ $config = [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '4dw5Aev1ctGLgcjsVgL7r4zFOO2IZSTW',
         ],
+        'view' => [
+            'class' => 'lan143\advanced_view\View'
+        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
@@ -58,7 +61,8 @@ $config = [
             'bundles' => [
                 'app\assets\CustomAsset' => [],
                 'app\assets\BootBoxAsset' => [],
-                'app\assets\UserAsset' => []
+                'app\assets\UserAsset' => [],
+                'app\assets\MailTemplateNewYearAsset' => []
             ],
             'linkAssets' => true,
             'appendTimestamp' => true

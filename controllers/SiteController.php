@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Calculator;
+use app\models\MailTemplate;
 use app\models\TestModel;
 use Yii;
 use yii\base\InvalidRouteException;
@@ -117,16 +118,29 @@ class SiteController extends Controller
      */
     public function actionContact()
     {
+        /*$templates = MailTemplate::getAllTemplates();*/
+        $templateAssocArray = MailTemplate::getAllTemplatesAsAssocArray();
+        /*var_dump(MailTemplate::getAllTemplates()); exit;*/
+
         /*var_dump(Yii::$app->params); exit;*/
         $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
+        if ($model->load(Yii::$app->request->post())) {
+            $template = new MailTemplate($model->template);
+            if($model->contact(Yii::$app->params['adminEmail'], $template)) {
+                Yii::$app->session->setFlash('contactFormSubmitted');
+            }
             return $this->refresh();
+            /*return $this->render('render', ['content' => $model->body, 'template' => $template]);*/
         }
         return $this->render('contact', [
             'model' => $model,
+            'templateAssocArray' => $templateAssocArray
         ]);
+    }
+
+    public function actionRender()
+    {
+        //
     }
 
     /**
