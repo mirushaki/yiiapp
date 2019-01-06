@@ -18,10 +18,6 @@ class MailTemplateNewYearAsset extends AssetBundle
     public $css = [
         'css/template.css'
     ];
-
-    public $cssOptions = [
-        'position' => \yii\web\View::POS_BEGIN
-    ];
 /*
     public $publishOptions = [
         'forceCopy' => true,

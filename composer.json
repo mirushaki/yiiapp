@@ -20,8 +20,7 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "yiisoft/yii2-jui" : "*",
         "bower-asset/bootbox" : "~4.3.0",
-        "ext-json": "*",
-        "lan143/yii2-advanced-view": "*"
+        "ext-json": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
