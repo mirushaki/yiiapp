@@ -24,7 +24,7 @@ class Users extends ActiveRecord
 
     public function getOrders()
     {
-        return $this->hasMany(Orders::className(), ['user_id' => 'id']);
+        return $this->hasMany(Orders::class, ['user_id' => 'id']);
     }
 
     public static function tableName()
@@ -49,6 +49,22 @@ class Users extends ActiveRecord
             [['firstName', 'lastName', 'eMail'], 'required'],
             [['firstName', 'lastName'], 'string', 'max' => 50],
             ['eMail', 'email']
+        ];
+    }
+
+    public function fields()
+    {
+        return [
+            'Id' => 'id',
+            'First_Name' => 'firstName',
+            'Last_Name' => 'lastName'
+        ];
+    }
+
+    public function extraFields()
+    {
+        return [
+            'E-Mail' => 'eMail'
         ];
     }
 }
