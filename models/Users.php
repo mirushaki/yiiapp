@@ -8,9 +8,12 @@
 
 namespace app\models;
 
+use yii\helpers\Url;
 use yii\db\ActiveRecord;
+use yii\web\Link;
+use yii\web\Linkable;
 
-class Users extends ActiveRecord
+class Users extends ActiveRecord implements Linkable
 {
     // ActiveRecord should not have explicitly declared attributes
     /*
@@ -54,17 +57,23 @@ class Users extends ActiveRecord
 
     public function fields()
     {
-        return [
-            'Id' => 'id',
-            'First_Name' => 'firstName',
-            'Last_Name' => 'lastName'
-        ];
+        $fields = parent::fields();
+        unset($fields['eMail']);
+        return $fields;
     }
 
     public function extraFields()
     {
         return [
-            'E-Mail' => 'eMail'
+            'eMail'
+        ];
+    }
+
+    public function getLinks()
+    {
+        return [
+            Link::REL_SELF => Url::to(['user-api/view', 'id' => $this->id], true),
+            'orders' => Url::to(['order-api/view', 'id' => $this->id], true)
         ];
     }
 }
