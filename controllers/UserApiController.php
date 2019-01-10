@@ -14,12 +14,17 @@ use app\models\UsersSearch;
 use yii\data\ActiveDataFilter;
 use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
+use yii\rest\Serializer;
 use yii\web\ForbiddenHttpException;
 use yii\web\Response;
 
 class UserApiController extends ActiveController
 {
     public $modelClass = "app\models\Users";
+    public $serializer = [
+        'class' => 'yii\rest\Serializer',
+        'collectionEnvelope' => 'items'
+    ];
 
     public function actions()
     {
@@ -31,7 +36,7 @@ class UserApiController extends ActiveController
     public function behaviors()
     {
         $behaviors =  parent::behaviors();
-        unset($behaviors['contentNegotiator']['formats']['application/xml']);
+        /*unset($behaviors['contentNegotiator']['formats']['application/xml']);*/
         return $behaviors;
     }
 

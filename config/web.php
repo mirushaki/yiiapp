@@ -71,7 +71,7 @@ $config = [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'user-api']
+                'class' => 'yii\rest\UrlRule', 'controller' => 'user-api'
             ]
         ],
         'formatter' => [
