@@ -10,9 +10,11 @@ namespace app\controllers;
 
 
 use app\models\Users;
+use app\models\UsersSearch;
 use yii\data\ActiveDataFilter;
 use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
+use yii\web\ForbiddenHttpException;
 
 class UserApiController extends ActiveController
 {
@@ -23,6 +25,14 @@ class UserApiController extends ActiveController
         $actions = parent::actions();
         $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
         return $actions;
+    }
+
+    public function checkAccess($action, $model = null, $params = [])
+    {
+        if($action === 'delete')
+        {
+            throw new ForbiddenHttpException(sprintf("You cannot use %s", $action));
+        }
     }
 
     public function prepareDataProvider()
