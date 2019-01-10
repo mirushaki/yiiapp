@@ -16,10 +16,16 @@ use yii\rest\ActiveController;
 
 class UserApiController extends ActiveController
 {
-
     public $modelClass = "app\models\Users";
 
-    public function actionIndex()
+    public function actions()
+    {
+        $actions = parent::actions();
+        $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
+        return $actions;
+    }
+
+    public function prepareDataProvider()
     {
         $filter = new ActiveDataFilter([
             'searchModel' => 'app\models\UsersSearch'
@@ -43,7 +49,10 @@ class UserApiController extends ActiveController
         }
 
         return new ActiveDataProvider([
-            'query' => Users::find(),
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 2
+            ]
         ]);
     }
 }
