@@ -69,15 +69,14 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'enableStrictParsing' => false,
+            'enableStrictParsing' => true,
             'rules' => [
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'user-api']
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'user-api', 'pluralize' => false]
             ]
         ],
         'formatter' => [
             'locale' => 'ka-GE'
         ]
-
     ],
     //'catchAll' => ['site/under-construction'],
 ];
