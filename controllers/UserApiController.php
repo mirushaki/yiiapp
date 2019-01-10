@@ -15,6 +15,7 @@ use yii\data\ActiveDataFilter;
 use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
 use yii\web\ForbiddenHttpException;
+use yii\web\Response;
 
 class UserApiController extends ActiveController
 {
@@ -25,6 +26,13 @@ class UserApiController extends ActiveController
         $actions = parent::actions();
         $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
         return $actions;
+    }
+
+    public function behaviors()
+    {
+        $behaviors =  parent::behaviors();
+        unset($behaviors['contentNegotiator']['formats']['application/xml']);
+        return $behaviors;
     }
 
     public function checkAccess($action, $model = null, $params = [])
