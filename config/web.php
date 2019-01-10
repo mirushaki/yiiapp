@@ -69,9 +69,9 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'enableStrictParsing' => true,
+            'enableStrictParsing' => false,
             'rules' => [
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'user-api', 'pluralize' => false]
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'user-api']
             ]
         ],
         'formatter' => [
