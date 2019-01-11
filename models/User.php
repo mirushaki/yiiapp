@@ -11,6 +11,7 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     public $accessToken;
 
     const USER_ADMIN = 100;
+    const USER_REGULAR = 101;
 
     private static $users = [
         '100' => [
