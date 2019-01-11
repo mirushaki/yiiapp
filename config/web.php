@@ -89,7 +89,7 @@ $config = [
             ]
         ],
         'authManager' => [
-            'class' => \yii\rbac\DbManager::class
+            'class' => 'yii\rbac\DbManager'
         ],
         'formatter' => [
             'locale' => 'ka-GE'

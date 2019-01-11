@@ -10,9 +10,12 @@ class m190111_153225_init_rbac extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function up()
     {
-        $auth = \Yii::$app->authManager;
+        $auth = Yii::$app->authManager;
+
+        if($auth == null)
+            $auth = new \yii\rbac\DbManager();
 
         $viewUsersData = $auth->createPermission('viewUsersData');
         $viewUsersData->description = '"Users" data view';
@@ -38,9 +41,9 @@ class m190111_153225_init_rbac extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function down()
     {
-        $auth = \Yii::$app->authManager;
+        $auth = Yii::$app->authManager;
 
         $auth->removeAll();
     }
