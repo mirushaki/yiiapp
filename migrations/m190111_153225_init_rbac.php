@@ -19,6 +19,7 @@ class m190111_153225_init_rbac extends Migration
 
         $viewUsersData = $auth->createPermission('viewUsersData');
         $viewUsersData->description = '"Users" data view';
+        $auth->add($viewUsersData);
 
         $modifyUsersData = $auth->createPermission('modifyUsersData');
         $modifyUsersData->description = '"Users" data modification';
