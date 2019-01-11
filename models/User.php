@@ -10,6 +10,8 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     public $authKey;
     public $accessToken;
 
+    const USER_ADMIN = 100;
+
     private static $users = [
         '100' => [
             'id' => '100',
@@ -46,7 +48,6 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
                 return new static($user);
             }
         }
-
         return null;
     }
 

@@ -29,6 +29,8 @@ $this->title = 'DATA';
         'tableOptions' => ['class' => 'table table-bordered table-striped table-responsive table-centered'],
         'caption' => 'Users',
         'captionOptions' => ['class' => 'h2', 'style' => ['text-align' => 'center']],
+        'headerRowOptions' => ['style' => ['text-align' => 'center']],
+        'emptyCell' => null,
         'emptyText' => 'no users found',
         'emptyTextOptions' => ['class' => 'h4', 'style' => ['text-align' => 'center']],
         'columns' => [
@@ -66,7 +68,7 @@ $this->title = 'DATA';
                         else {
                             return Url::to(['user/'.$action, 'id' => $model->id]);
                         }
-                    }
+                    },
                 ]
             ],
         'pager' => [

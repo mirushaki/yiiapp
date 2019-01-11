@@ -35,7 +35,11 @@ $config = [
         ],
         'user' => [
             'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
+            //Coockie based login (Remember me)
+            'enableAutoLogin' => false,
+            //THIS WILL DISABLE WEB_AUTHENTIFICATION
+            'enableSession' => false,
+            'loginUrl' => null
         ],
         'errorHandler' => [
             'errorAction' => 'site/error'
