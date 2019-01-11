@@ -88,6 +88,9 @@ $config = [
                 'class' => 'yii\rest\UrlRule', 'controller' => 'user-api'
             ]
         ],
+        'authManager' => [
+            'class' => \yii\rbac\PhpManager::class
+        ],
         'formatter' => [
             'locale' => 'ka-GE'
         ]
