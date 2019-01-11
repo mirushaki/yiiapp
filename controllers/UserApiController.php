@@ -13,6 +13,7 @@ use app\models\Users;
 use app\models\UsersSearch;
 use yii\data\ActiveDataFilter;
 use yii\data\ActiveDataProvider;
+use yii\data\DataFilter;
 use yii\rest\ActiveController;
 use yii\rest\Serializer;
 use yii\web\ForbiddenHttpException;
@@ -20,9 +21,9 @@ use yii\web\Response;
 
 class UserApiController extends ActiveController
 {
-    public $modelClass = "app\models\Users";
+    public $modelClass = Users::class;
     public $serializer = [
-        'class' => 'yii\rest\Serializer',
+        'class' => Serializer::class,
         'collectionEnvelope' => 'items'
     ];
 
@@ -30,8 +31,23 @@ class UserApiController extends ActiveController
     {
         $actions = parent::actions();
         $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
+
+        /*$actions['index']['dataFilter'] = [
+            'class' => 'yii\data\ActiveDataFilter',
+            'searchModel' => $this->search()
+        ];*/
+
         return $actions;
     }
+
+    /*private function search()
+    {
+         return (new \yii\base\DynamicModel(['id' => null, 'firstName' => null, 'lastName' => null, 'eMail' => null]))
+            ->addRule('id', 'integer')
+            ->addRule('firstName', 'string')
+            ->addRule('lastName', 'string')
+            ->addRule('eMail', 'email');
+    }*/
 
     public function behaviors()
     {
@@ -74,7 +90,15 @@ class UserApiController extends ActiveController
         return new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => 2
+                'pageSize' => 20
+            ],
+            'sort' => [
+                'attributes' => [
+                    'firstName',
+                    'lastName',
+                    'eMail'
+                ],
+                'enableMultiSort' => true,
             ]
         ]);
     }

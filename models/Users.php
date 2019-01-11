@@ -55,10 +55,13 @@ class Users extends ActiveRecord implements Linkable
         ];
     }
 
-    public function fields()
+    /*public function fields()
     {
         $fields = parent::fields();
-        unset($fields['eMail']);
+        $fields['fullName'] = function($model) {
+            return $model->firstName.' '.$model->lastName;
+        };
+        unset($fields['firstName'], $fields['lastName'], $fields['eMail']);
         return $fields;
     }
 
@@ -67,7 +70,7 @@ class Users extends ActiveRecord implements Linkable
         return [
             'eMail'
         ];
-    }
+    }*/
 
     public function getLinks()
     {
