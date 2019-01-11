@@ -10,7 +10,7 @@ class m190111_153225_init_rbac extends Migration
     /**
      * {@inheritdoc}
      */
-    public function up()
+    public function safeUp()
     {
         $auth = Yii::$app->authManager;
 
@@ -42,7 +42,7 @@ class m190111_153225_init_rbac extends Migration
     /**
      * {@inheritdoc}
      */
-    public function down()
+    public function safeDown()
     {
         $auth = Yii::$app->authManager;
 
