@@ -34,7 +34,7 @@ class m190111_153225_init_rbac extends Migration
         $auth->addChild($admin, $modifyUsersData);
         $auth->addChild($admin, $regularUser);
 
-        $auth->asign($admin, \app\models\User::USER_ADMIN);
+        $auth->assign($admin, \app\models\User::USER_ADMIN);
         $auth->assign($regularUser, \app\models\User::USER_REGULAR);
 
     }
