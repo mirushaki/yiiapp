@@ -15,6 +15,7 @@ use app\models\UsersSearch;
 use yii\data\ActiveDataFilter;
 use yii\data\ActiveDataProvider;
 use yii\data\DataFilter;
+use yii\filters\AccessControl;
 use yii\filters\auth\HttpBasicAuth;
 use yii\rest\ActiveController;
 use yii\rest\Serializer;
@@ -57,11 +58,26 @@ class UserApiController extends ActiveController
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::class
         ];
+        $behaviors['access'] = [
+            'class' => AccessControl::class,
+            'rules' => [
+                [
+                    'allow' => true,
+                    'actions' => ['index', 'view', 'options'],
+                    'roles' => ['viewUsersData']
+                ],
+                [
+                    'allow' => true,
+                    'actions' => ['create', 'update', 'delete'],
+                    'roles' => ['modifyUsersData']
+                ],
+            ]
+        ];
         /*unset($behaviors['contentNegotiator']['formats']['application/xml']);*/
         return $behaviors;
     }
 
-    public function checkAccess($action, $model = null, $params = [])
+    /*public function checkAccess($action, $model = null, $params = [])
     {
         if($action !== 'index')
         {
@@ -70,7 +86,7 @@ class UserApiController extends ActiveController
                 throw new ForbiddenHttpException(sprintf("Only administrator can use %s. USER_ID:%d", $action, \Yii::$app->user->getId()));
             }
         }
-    }
+    }*/
 
     public function prepareDataProvider()
     {
